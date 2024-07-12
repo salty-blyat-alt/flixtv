@@ -27,6 +27,7 @@
 
 </head>
 <body>
+    <x-navbar/>
 	<!-- sign in -->
 	<div class="sign section--full-bg" data-bg="img/bg.jpg">
 		<div class="container">
@@ -35,7 +36,7 @@
 					<div class="sign__content">
 						<!-- authorization form -->
 						<form action="#" class="sign__form">
-							<a href="index" class="sign__logo">
+							<a href="/" class="sign__logo">
 								<img src="img/logo.svg" alt="">
 							</a>
 
