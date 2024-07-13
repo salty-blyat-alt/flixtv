@@ -24,11 +24,10 @@ Route::view('/profile', 'pages.profile');
 Route::view('/contacts', 'pages.contacts');
 Route::view('/interview', 'pages.interview');
 Route::view('/signin', 'pages.signin');
-Route::view('/category', 'pages.category');
+Route::get('/category/{category_slug?}', function($category_slug = 0) {
+    return view('pages.category', ['category_slug' => $category_slug]);
+});
 Route::view('/privacy', 'pages.privacy');
-
-// Route to display details without a specific movie_slug
-Route::view('/details', 'pages.details3');
 
 // Route to display details with a specific movie_slug
 Route::get('/details/{movie_slug?}', function($movie_slug = 0) {
@@ -36,8 +35,5 @@ Route::get('/details/{movie_slug?}', function($movie_slug = 0) {
 });
 
 
-Route::get('/movies/category/{category_slug?}', function($category_slug = 0) {
-    return view('pages.details2', ['slug' => $category_slug]);
-});
 
 
