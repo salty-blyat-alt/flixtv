@@ -36,10 +36,9 @@
     <!-- head -->
     <section class="section section--head">
         <div class="container">
-            <h1 class="text-white font-bold text-2xl">category slug: {{ $category_slug }}</h1>
             <div class="row">
                 <div class="col-12 col-xl-6">
-                    <h1 class="section__title section__title--head">Category</h1>
+                    <h1 class="section__title section__title--head">Category {{ $category_slug }}</h1>
                 </div>
 
                 <div class="col-12 col-xl-6">
