@@ -43,23 +43,17 @@
     <!-- end header -->
 
     <!-- home -->
-    <div class="home">
-        <div class="home__carousel owl-carousel" id="flixtv-hero">
-
-
-            <!-- Example usage in a Blade view -->
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-            <x-card-home link="details" image="img/home/2.jpg" title="The Art of Political" />
-
+    <div class="home ">
+        <div class="home__carousel owl-carousel " id="flixtv-hero">
+            @foreach ($movies['results'] as $movie)
+                <x-card-home
+                    :link="'detail/' . $movie['id']"
+                    :image="$movie['poster_path'] ? 'https://image.tmdb.org/t/p/original' . $movie['poster_path'] : asset('img/home/2.jpg')"
+                    :title="$movie['title']"
+                />
+            @endforeach
         </div>
+
 
         <button class="home__nav home__nav--prev" data-nav="#flixtv-hero" type="button"></button>
         <button class="home__nav home__nav--next" data-nav="#flixtv-hero" type="button"></button>
@@ -73,10 +67,7 @@
                 <div class="col-12">
                     <div class="catalog__nav">
                         <div class="catalog__select-wrap">
-<x-genre-select class="catalog__select" name="genres" />
-
-
-
+                            <x-genre-select class="catalog__select" name="genres" />
                             <select class="catalog__select" name="years">
                                 <option value="All the years">All the years</option>
                                 <option value="1">'50s</option>

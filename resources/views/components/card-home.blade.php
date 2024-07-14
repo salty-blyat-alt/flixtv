@@ -1,6 +1,6 @@
-<div class="home__card">
+<div class="home__card " style="width: 20rem">
     <a href="{{ $link }}">
-        <img src="{{ $image }}" alt="">
+        <img src="{{ $image }}" alt={{$title}}>
     </a>
     <div>
         <h2>{{ $title }}</h2>

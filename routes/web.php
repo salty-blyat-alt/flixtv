@@ -15,7 +15,11 @@ use App\Http\Controllers\MovieController;
 |
 */
 
-Route::view('/', 'pages.index2');
+
+Route::get('/',  [MovieController::class, 'getPopularMovies']);
+
+
+
 Route::view('/catalog', 'pages.catalog');
 Route::view('/pricing', 'pages.pricing');
 Route::view('/live', 'pages.live');
@@ -24,16 +28,13 @@ Route::view('/profile', 'pages.profile');
 Route::view('/contacts', 'pages.contacts');
 Route::view('/interview', 'pages.interview');
 Route::view('/signin', 'pages.signin');
+Route::view('/privacy', 'pages.privacy');
+
+
 Route::get('/category/{category_slug?}', function($category_slug = 0) {
     return view('pages.category', ['category_slug' => $category_slug]);
 });
-Route::view('/privacy', 'pages.privacy');
-
-// Route to display details with a specific movie_slug
-Route::get('/details/{movie_slug?}', function($movie_slug = 0) {
-    return view('pages.details3', ['movie_slug' => $movie_slug]);
-});
-
+Route::get('/detail/{id?}', [MovieController::class, 'getMovieById']);
 
 
 
