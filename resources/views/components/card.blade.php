@@ -27,14 +27,15 @@
         <div class="card__content">
             <h3 class="card__title"><a href="{{ $link }}">{{ $title }}</a></h3>
             <ul class="card__list">
+                <li>{{ $tagline }}</li>
+            </ul>
+            <p class="card__tagline">
+            <ul class="card__list flex flex-wrap">
                 @foreach ($tags as $tag)
                     <li>{{ $tag }}</li>
                 @endforeach
             </ul>
-            <ul class="card__info">
-                <li><span>Director:</span><span><a href="#">{{ $director }}</a></span></li>
-            </ul>
-            <p class="card__tagline">{{ $tagline }}</p>
+            </p>
         </div>
     </div>
 

@@ -35,7 +35,6 @@ class MovieController extends Controller
             // Pass movie details and video embed HTML to the view
             return view('pages.details', ['movie' => $movieDetails, 'videoEmbed' => $videoEmbed]);
         } catch (\Exception $e) {
-            Log::error('Error fetching movie details or video embed: ' . $e->getMessage());
             return response()->json(['error' => 'Error fetching movie details or video embed'], 500);
         }
     }
@@ -53,7 +52,6 @@ class MovieController extends Controller
             // Pass the data to the view
             return view('pages.index2', ['popularMovies' => $popularMovies, 'discoverMovies' => $discoverMovies]);
         } catch (\Exception $e) {
-            Log::error('Error fetching movies: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

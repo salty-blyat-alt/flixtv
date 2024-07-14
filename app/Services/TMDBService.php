@@ -101,7 +101,8 @@ class TMDBService
     }
 
     public function getPopularMovies() {
-        $url = $this->baseUrl . "/movie/popular?api_key=" . $this->apiKey . "&language=en-US&page=1";
+        $url = $this->baseUrl . "/trending/movie/day?api_key=".  $this->apiKey  . "&language=en-US";
+
         $response = Http::withOptions(['verify' => false])->get($url);
 
         if ($response->successful()) {

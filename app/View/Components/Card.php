@@ -12,10 +12,9 @@ class Card extends Component
     public $rating;
     public $year;
     public $tags;
-    public $director;
     public $tagline;
 
-    public function __construct($title, $image, $link, $rating, $year, $tags, $director, $tagline)
+    public function __construct($title, $image, $link, $rating, $year, $tags,   $tagline)
     {
         $this->title = $title;
         $this->image = $image;
@@ -23,7 +22,6 @@ class Card extends Component
         $this->rating = $rating;
         $this->year = $year;
         $this->tags = $tags;
-        $this->director = $director;
         $this->tagline = $tagline;
     }
 
