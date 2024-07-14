@@ -16,9 +16,7 @@ use App\Http\Controllers\MovieController;
 */
 
 
-Route::get('/',  [MovieController::class, 'getPopularMovies']);
-
-
+Route::get('/', [MovieController::class, 'populateHomePageMovie']);
 
 Route::view('/catalog', 'pages.catalog');
 Route::view('/pricing', 'pages.pricing');
@@ -35,6 +33,5 @@ Route::get('/category/{category_slug?}', function($category_slug = 0) {
     return view('pages.category', ['category_slug' => $category_slug]);
 });
 Route::get('/detail/{id?}', [MovieController::class, 'getMovieById']);
-
 
 

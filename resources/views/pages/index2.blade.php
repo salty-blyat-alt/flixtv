@@ -45,12 +45,10 @@
     <!-- home -->
     <div class="home ">
         <div class="home__carousel owl-carousel " id="flixtv-hero">
-            @foreach ($movies['results'] as $movie)
-                <x-card-home
-                    :link="'detail/' . $movie['id']"
-                    :image="$movie['poster_path'] ? 'https://image.tmdb.org/t/p/original' . $movie['poster_path'] : asset('img/home/2.jpg')"
-                    :title="$movie['title']"
-                />
+            @foreach ($popularMovies['results'] as $popularMovies)
+                <x-card-home :link="'detail/' . $popularMovies['id']" :image="$popularMovies['poster_path']
+                    ? 'https://image.tmdb.org/t/p/original' . $popularMovies['poster_path']
+                    : asset('img/home/2.jpg')" :title="$popularMovies['title']" />
             @endforeach
         </div>
 
@@ -67,7 +65,11 @@
                 <div class="col-12">
                     <div class="catalog__nav">
                         <div class="catalog__select-wrap">
-                            <x-genre-select class="catalog__select" name="genres" />
+                            {{-- filter the movie by genre --}}
+                            <form id="genreForm" method="GET" action="{{ url('/') }}">
+                                <x-genre-select class="catalog__select" name="genre" id="genreSelect" />
+                            </form>
+
                             <select class="catalog__select" name="years">
                                 <option value="All the years">All the years</option>
                                 <option value="1">'50s</option>
@@ -90,14 +92,14 @@
                     </div>
 
                     <div class="row row--grid">
-
-                        <x-card title="The Good Lord Bird" image="img/card/1.png" link="details" rating="9.1"
-                            year="2019" :tags="['Free', 'Action']" director="Rian Johnson"
-                            tagline="«One man's struggle to take it easy»" />
-                        <x-card title="The Good Lord Bird" image="img/card/1.png" link="details" rating="9.1"
-                            year="2019" :tags="['Free', 'Action']" director="Rian Johnson"
-                            tagline="«One man's struggle to take it easy»" />
-
+                        @foreach ($discoverMovies['results'] as $discoverMovie)
+                            <x-card title="{{ $discoverMovie['title'] }}"
+                                image="{{ $discoverMovie['poster_path'] ? 'https://image.tmdb.org/t/p/w500' . $discoverMovie['poster_path'] : 'default-image-path.jpg' }}"
+                                link="{{ url('detail/' . $discoverMovie['id']) }}"
+                                rating="{{ $discoverMovie['vote_average'] }}"
+                                year="{{ date('Y', strtotime($discoverMovie['release_date'])) }}" :tags="[]"
+                                director="N/A" tagline=""/>
+                        @endforeach
                     </div>
 
                     <div class="row">
@@ -146,7 +148,7 @@
             <section class="section section--pb0">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12 pt-4">
                             <h2 class="section__title">Subscriptions</h2>
                         </div>
                         <div class="col-12">
@@ -622,6 +624,16 @@
             <script src="js/jquery.magnific-popup.min.js"></script>
             <script src="js/plyr.min.js"></script>
             <script src="js/main.js"></script>
+            <script>
+                function filterMovies() {
+                    document.getElementById('genreForm').submit();
+                }
+            </script>
+
+
+
+
+
 </body>
 
 </html>
