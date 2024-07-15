@@ -41,7 +41,7 @@ class MovieController extends Controller
 
 
     public function populateHomePageMovie(Request $request) {
-        $selectedGenre = $request->input('genre');
+        $selectedGenre = $request->input('genre', '1');
          try {
             // Call the service method to get popular movies
             $popularMovies = $this->tmdbService->getPopularMovies();
@@ -50,7 +50,7 @@ class MovieController extends Controller
             $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre);
 
             // Pass the data to the view
-            return view('pages.index2', ['popularMovies' => $popularMovies, 'discoverMovies' => $discoverMovies]);
+            return view('pages.index2', ['popularMovies' => $popularMovies, 'discoverMovies' => $discoverMovies, 'selectedGenre' => $selectedGenre]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

@@ -65,10 +65,35 @@
                 <div class="col-12">
                     <div class="catalog__nav">
                         <div class="catalog__select-wrap">
+
                             {{-- filter the movie by genre --}}
-                            <form id="genreForm" method="GET" action="{{ url('/') }}">
-                                <x-genre-select class="catalog__select" name="genre" id="genreSelect" />
+                            <form id="genreForm" action="{{ url('/') }}" method="GET"> <!-- Ensure the form submits using GET method -->
+                                <select class="catalog__select" name="genre" onchange="submit()">
+                                    <option selected value="1" {{ $selectedGenre == '1' ? 'selected' : '' }}>All genres</option>
+                                    <option value="28" {{ $selectedGenre == '28' ? 'selected' : '' }}>Action</option>
+                                    <option value="12" {{ $selectedGenre == '12' ? 'selected' : '' }}>Adventure</option>
+                                    <option value="16" {{ $selectedGenre == '16' ? 'selected' : '' }}>Animation</option>
+                                    <option value="35" {{ $selectedGenre == '35' ? 'selected' : '' }}>Comedy</option>
+                                    <option value="80" {{ $selectedGenre == '80' ? 'selected' : '' }}>Crime</option>
+                                    <option value="99" {{ $selectedGenre == '99' ? 'selected' : '' }}>Documentary</option>
+                                    <option value="18" {{ $selectedGenre == '18' ? 'selected' : '' }}>Drama</option>
+                                    <option value="10751" {{ $selectedGenre == '10751' ? 'selected' : '' }}>Family</option>
+                                    <option value="14" {{ $selectedGenre == '14' ? 'selected' : '' }}>Fantasy</option>
+                                    <option value="36" {{ $selectedGenre == '36' ? 'selected' : '' }}>History</option>
+                                    <option value="27" {{ $selectedGenre == '27' ? 'selected' : '' }}>Horror</option>
+                                    <option value="10402" {{ $selectedGenre == '10402' ? 'selected' : '' }}>Music</option>
+                                    <option value="9648" {{ $selectedGenre == '9648' ? 'selected' : '' }}>Mystery</option>
+                                    <option value="10749" {{ $selectedGenre == '10749' ? 'selected' : '' }}>Romance</option>
+                                    <option value="878" {{ $selectedGenre == '878' ? 'selected' : '' }}>Science Fiction</option>
+                                    <option value="10770" {{ $selectedGenre == '10770' ? 'selected' : '' }}>TV Movie</option>
+                                    <option value="53" {{ $selectedGenre == '53' ? 'selected' : '' }}>Thriller</option>
+                                    <option value="10752" {{ $selectedGenre == '10752' ? 'selected' : '' }}>War</option>
+                                    <option value="37" {{ $selectedGenre == '37' ? 'selected' : '' }}>Western</option>
+                                 </select>
                             </form>
+
+
+
 
                             <select class="catalog__select" name="years">
                                 <option value="All the years">All the years</option>
@@ -129,10 +154,10 @@
                                 link="{{ url('detail/' . $discoverMovie['id']) }}"
                                 rating="{{ $discoverMovie['vote_average'] }}"
                                 year="{{ date('Y', strtotime($discoverMovie['release_date'])) }}" :tags="$movieGenres"
-                                 tagline="" />
+                                tagline="" />
                         @endforeach
                     </div>
-
+                    {{-- paginate section --}}
                     <div class="row">
                         <div class="col-12">
                             <div class="catalog__paginator-wrap">
@@ -655,15 +680,7 @@
             <script src="js/jquery.magnific-popup.min.js"></script>
             <script src="js/plyr.min.js"></script>
             <script src="js/main.js"></script>
-            <script>
-                function filterMovies() {
-                    document.getElementById('genreForm').submit();
-                }
-            </script>
-
-
-
-
+            <script>const submit=()=> document.getElementById('genreForm').submit();</script>
 
 </body>
 

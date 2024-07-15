@@ -28,15 +28,13 @@ class TMDBService
 
 
 
-    public function getDiscoverMovies($selectedGenre = '') {
-        // Log if no genre is selected
-        if (!$selectedGenre) {
-        }
+    public function getDiscoverMovies($selectedGenre = 1) {
 
         $url = $this->baseUrl . "/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=" . $this->apiKey;
 
         // Add genre filtering if a selected genre is provided
-        if ($selectedGenre) {
+        Log::info("selectedGenre : $selectedGenre");
+        if ($selectedGenre !== "1" ) {
             $url .= "&with_genres=" . $selectedGenre;
         }
 
@@ -52,8 +50,6 @@ class TMDBService
 
         throw new \Exception('Unable to fetch discovered movies from TMDB service: ' . $response->body());
     }
-
-
 
 
     public function getMovieDetails($id) {
