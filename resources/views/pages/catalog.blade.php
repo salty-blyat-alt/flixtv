@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-{{-- tailwind cdn --}}
+    {{-- tailwind cdn --}}
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,6 +29,7 @@
 </head>
 
 <body>
+
     <!-- header (hidden style) -->
     <x-navbar />
     <!-- end header -->
@@ -56,85 +57,35 @@
     <section class="section section--pb0">
         <div class="container">
             <div class="row row--grid">
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <a href="category" class="category">
-                        <div class="category__cover">
-                            <img src="img/category/1.jpg" alt="">
-                        </div>
-                        <h3 class="category__title">Animals</h3>
-                        <span class="category__value">322</span>
-                    </a>
-                </div>
+                @php
+                    $genres = [
+                        ['id' => 28, 'name' => 'Action'],
+                        ['id' => 12, 'name' => 'Adventure'],
+                        ['id' => 16, 'name' => 'Animation'],
+                        ['id' => 35, 'name' => 'Comedy'],
+                        ['id' => 80, 'name' => 'Crime'],
+                        ['id' => 99, 'name' => 'Documentary'],
+                        ['id' => 18, 'name' => 'Drama'],
+                        ['id' => 10751, 'name' => 'Family'],
+                        ['id' => 14, 'name' => 'Fantasy'],
+                        ['id' => 36, 'name' => 'History'],
+                        ['id' => 27, 'name' => 'Horror'],
+                        ['id' => 10402, 'name' => 'Music'],
+                        ['id' => 9648, 'name' => 'Mystery'],
+                        ['id' => 10749, 'name' => 'Romance'],
+                        ['id' => 878, 'name' => 'Science Fiction'],
+                        ['id' => 10770, 'name' => 'TV Movie'],
+                        ['id' => 53, 'name' => 'Thriller'],
+                        ['id' => 10752, 'name' => 'War'],
+                        ['id' => 37, 'name' => 'Western'],
+                    ];
+                @endphp
+                @foreach ($genres as $genre)
+                    <x-category-card image="https://i.ibb.co/9Ym10G5/pepsi.jpg" title="{{ $genre['name'] }}"
+                        value="{{ rand(100, 500) }}" link="/category/{{ $genre['id'] }}" />
+                @endforeach
 
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <a href="category" class="category">
-                        <div class="category__cover">
-                            <img src="img/category/2.jpg" alt="">
-                        </div>
-                        <h3 class="category__title">Comedy</h3>
-                        <span class="category__value">174</span>
-                    </a>
-                </div>
 
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <a href="category" class="category">
-                        <div class="category__cover">
-                            <img src="img/category/3.jpg" alt="">
-                        </div>
-                        <h3 class="category__title">Documentary</h3>
-                        <span class="category__value">509</span>
-                    </a>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <a href="category" class="category">
-                        <div class="category__cover">
-                            <img src="img/category/4.jpg" alt="">
-                        </div>
-                        <h3 class="category__title">History</h3>
-                        <span class="category__value">1 228</span>
-                    </a>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <a href="category" class="category">
-                        <div class="category__cover">
-                            <img src="img/category/5.jpg" alt="">
-                        </div>
-                        <h3 class="category__title">Horror</h3>
-                        <span class="category__value">1 025</span>
-                    </a>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <a href="category" class="category">
-                        <div class="category__cover">
-                            <img src="img/category/6.jpg" alt="">
-                        </div>
-                        <h3 class="category__title">Science Fiction</h3>
-                        <span class="category__value">819</span>
-                    </a>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <a href="category" class="category">
-                        <div class="category__cover">
-                            <img src="img/category/7.jpg" alt="">
-                        </div>
-                        <h3 class="category__title">Travel</h3>
-                        <span class="category__value">3 601</span>
-                    </a>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <a href="category" class="category">
-                        <div class="category__cover">
-                            <img src="img/category/8.jpg" alt="">
-                        </div>
-                        <h3 class="category__title">Western</h3>
-                        <span class="category__value">745</span>
-                    </a>
-                </div>
             </div>
         </div>
     </section>
@@ -169,8 +120,7 @@
                                         <path
                                             d="M16,2H8A3,3,0,0,0,5,5V21a1,1,0,0,0,.5.87,1,1,0,0,0,1,0L12,18.69l5.5,3.18A1,1,0,0,0,18,22a1,1,0,0,0,.5-.13A1,1,0,0,0,19,21V5A3,3,0,0,0,16,2Zm1,17.27-4.5-2.6a1,1,0,0,0-1,0L7,19.27V5A1,1,0,0,1,8,4h8a1,1,0,0,1,1,1Z" />
                                     </svg></button>
-                                <span class="card__rating"><svg xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24">
+                                <span class="card__rating"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path
                                             d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z" />
                                     </svg> 8.3</span>
@@ -982,15 +932,15 @@
                                 </svg> Switch plans or cancel anytime</li>
                             <li class="red"><svg width="19" height="19" viewBox="0 0 19 19"
                                     fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M17.596 1.59982L1.60938 17.5865" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M17.596 1.59982L1.60938 17.5865" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                     <path d="M17.601 17.5961L1.60101 1.5928" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                 </svg> Stream 65+ top Live</li>
                             <li class="red"><svg width="19" height="19" viewBox="0 0 19 19"
                                     fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M17.596 1.59982L1.60938 17.5865" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M17.596 1.59982L1.60938 17.5865" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                     <path d="M17.601 17.5961L1.60101 1.5928" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                 </svg> TV channels</li>
@@ -1022,8 +972,8 @@
                                 </svg> Stream 65+ top Live</li>
                             <li class="red"><svg width="19" height="19" viewBox="0 0 19 19"
                                     fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M17.596 1.59982L1.60938 17.5865" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M17.596 1.59982L1.60938 17.5865" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                     <path d="M17.601 17.5961L1.60101 1.5928" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                 </svg> TV channels</li>
@@ -1078,8 +1028,8 @@
                     </div>
                     <p class="footer__tagline">Movies & TV Shows, Online cinema,<br> Movie database HTML Template.</p>
                     <div class="footer__social">
-                        <a href="#" target="_blank"><svg width="30" height="30"
-                                viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <a href="#" target="_blank"><svg width="30" height="30" viewBox="0 0 30 30"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M0 15C0 6.71573 6.71573 0 15 0C23.2843 0 30 6.71573 30 15C30 23.2843 23.2843 30 15 30C6.71573 30 0 23.2843 0 15Z"
                                     fill="#3B5998" />
@@ -1087,8 +1037,8 @@
                                     d="M16.5634 23.8197V15.6589H18.8161L19.1147 12.8466H16.5634L16.5672 11.4391C16.5672 10.7056 16.6369 10.3126 17.6904 10.3126H19.0987V7.5H16.8457C14.1394 7.5 13.1869 8.86425 13.1869 11.1585V12.8469H11.4999V15.6592H13.1869V23.8197H16.5634Z"
                                     fill="white" />
                             </svg></a>
-                        <a href="#" target="_blank"><svg width="30" height="30"
-                                viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <a href="#" target="_blank"><svg width="30" height="30" viewBox="0 0 30 30"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M0 15C0 6.71573 6.71573 0 15 0C23.2843 0 30 6.71573 30 15C30 23.2843 23.2843 30 15 30C6.71573 30 0 23.2843 0 15Z"
                                     fill="#55ACEE" />
@@ -1114,8 +1064,8 @@
                                         fill="black" />
                                 </g>
                             </svg></a>
-                        <a href="#" target="_blank"><svg width="30" height="30"
-                                viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <a href="#" target="_blank"><svg width="30" height="30" viewBox="0 0 30 30"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M0 15C0 6.71573 6.71573 0 15 0C23.2843 0 30 6.71573 30 15C30 23.2843 23.2843 30 15 30C6.71573 30 0 23.2843 0 15Z"
                                     fill="#4C6C91" />

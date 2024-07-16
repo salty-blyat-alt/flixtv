@@ -165,6 +165,7 @@
                                     $discoverMovie['genre_ids'],
                                 );
                             @endphp
+
                             <x-card title="{{ $discoverMovie['title'] }}"
                                 image="{{ $discoverMovie['poster_path'] ? 'https://image.tmdb.org/t/p/w500' . $discoverMovie['poster_path'] : 'default-image-path.jpg' }}"
                                 link="{{ url('detail/' . $discoverMovie['id']) }}"
@@ -176,11 +177,8 @@
                     {{-- paginate section --}}
                     <div class="row">
                         <div class="col-12">
-                            <div class="catalog__paginator-wrap">
-                                <span class="catalog__pages">{{ ceil(count($discoverMovies['results']) / 6) }}</span>
-
-                                <ul class="catalog__paginator text-white" id="pagination">
-                                    <!-- Pagination buttons will be rendered here -->
+                            <div class="catalog__paginator-wrap flex justify-center">
+                                <ul class="catalog__paginator text-white " id="pagination">
                                 </ul>
                             </div>
                         </div>
@@ -673,8 +671,10 @@
             <script src="js/main.js"></script>
             <script>
                 const submit = () => document.getElementById('genreForm').submit();
-                let currentPage = 1;
-                let maxPages = 111;
+                let currentPage = parseInt(@json($currentPage), 10);
+                let maxPages = parseInt(500);
+                let selectedGenre = parseInt(@json($selectedGenre), 10);
+
 
                 function paginate({
                     current,
@@ -682,9 +682,10 @@
                 }) {
                     if (!current || !max) return null;
 
-                    let prev = current === 1 ? null : current - 1,
-                        next = current === max ? null : current + 1,
-                        items = [1];
+                    let prev = current === 1 ? null : parseInt(current - 1, 10);
+                    let next = current === max ? null : parseInt(current + 1, 10);
+                    let items = [1];
+
 
                     if (current === 1 && max === 1) return {
                         current,
@@ -694,9 +695,10 @@
                     };
                     if (current > 4) items.push('…');
 
-                    let r = 2,
-                        r1 = current - r,
-                        r2 = current + r;
+                    let r = 2;
+                    let r1 = parseInt(current - r, 10);
+                    let r2 = parseInt(current + r, 10);
+
 
                     for (let i = r1 > 2 ? r1 : 2; i <= Math.min(max, r2); i++) items.push(i);
 
@@ -722,26 +724,32 @@
                     let html = '';
 
                     if (paginationData.prev !== null) {
-                        html += `<li><button onclick="goToPage(${paginationData.prev})">Previous</button></li>`;
+                        html +=
+                            `<li><button class="bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-600 rounded px-4 py-2" onclick="goToPage(${paginationData.prev})">Previous</button></li>`;
                     }
 
                     paginationData.items.forEach(item => {
                         if (item === '…') {
-                            html += '<li><span>…</span></li>';
+                            html += '<li><span class="px-4 py-2 text-gray-400">…</span></li>';
                         } else {
-                            html += `<li><button onclick="goToPage(${item})">${item}</button></li>`;
+                            html +=
+                                `<li><button class="bg-gray-700 text-white hover:bg-gray-600 active:bg-gray-500 rounded px-4 py-2" onclick="goToPage(${item})">${item}</button></li>`;
+                                console.log(item)
                         }
                     });
 
                     if (paginationData.next !== null) {
-                        html += `<li><button onclick="goToPage(${paginationData.next})">Next</button></li>`;
+                        html +=
+                            `<li><button class="bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-600 rounded px-4 py-2" onclick="goToPage(${paginationData.next})">Next</button></li>`;
                     }
+
 
                     paginationElement.innerHTML = html;
                 }
 
                 function goToPage(page) {
-                    console.log(page)
+
+                    window.location.href = `/?genre=${selectedGenre}&page=${page}`;
                     let paginationData = paginate({
                         current: page,
                         max: maxPages
@@ -754,7 +762,7 @@
                     max: maxPages
                 });
 
-                // Initial render
+
                 renderPagination(paginationData);
             </script>
 

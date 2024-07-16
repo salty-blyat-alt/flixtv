@@ -34,9 +34,9 @@ class TMDBService
         $subPage = ($fullPage - 1) % 3; // This gives us values 0, 1, or 2
         $pageBase = intdiv($fullPage - 1, 3) + 1; // TMDB API page to fetch
 
-        $url = $this->baseUrl . "/discover/movie?include_adult=false&include_video=false&language=en-US&page=$pageBase&sort_by=popularity.desc&api_key=" . $this->apiKey;
+        $url = $this->baseUrl . "/discover/movie?include_adult=false&include_video=false&language=en-US&page=$pageBase&sort_by=popularity.desc&api_key=$this->apiKey";
 
-        if ($selectedGenre !== "1") {
+        if ($selectedGenre !== '1') {
             $url .= "&with_genres=" . $selectedGenre;
         }
 
@@ -50,9 +50,7 @@ class TMDBService
             // Add pagination data
             $totalPages = ceil(count($movies) / $moviesPerPage);
             $data['results'] = $selectedMovies;
-            $data['page'] = $fullPage;
-            $data['total_pages'] = $totalPages * 3; // Adjust total pages since we're dividing each API page into 3 parts
-
+            $data['page'] = $fullPage; 
             return $data;
         }
 
@@ -105,7 +103,7 @@ class TMDBService
     }
 
     public function getPopularMovies() {
-        $url = $this->baseUrl . "/trending/movie/day?api_key=".  $this->apiKey  . "&language=en-US";
+        $url = $this->baseUrl . "/movie/popular?api_key=".  $this->apiKey  . "&language=en-US";
 
         $response = Http::withOptions(['verify' => false])->get($url);
 
@@ -114,4 +112,5 @@ class TMDBService
         }
         throw new \Exception('Unable to fetch popular movies from TMDB service: ' . $response->body());
     }
+
 }
