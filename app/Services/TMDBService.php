@@ -28,24 +28,32 @@ class TMDBService
 
 
 
-    public function getDiscoverMovies($selectedGenre = 1) {
+    public function getDiscoverMovies($selectedGenre = 1, $fullPage = 1) {
+        $moviesPerPage = 6;
+        // Calculate the offset for 6 movies per "subpage"
+        $subPage = ($fullPage - 1) % 3; // This gives us values 0, 1, or 2
+        $pageBase = intdiv($fullPage - 1, 3) + 1; // TMDB API page to fetch
 
-        $url = $this->baseUrl . "/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=" . $this->apiKey;
+        $url = $this->baseUrl . "/discover/movie?include_adult=false&include_video=false&language=en-US&page=$pageBase&sort_by=popularity.desc&api_key=" . $this->apiKey;
 
-        // Add genre filtering if a selected genre is provided
-        Log::info("selectedGenre : $selectedGenre");
-        if ($selectedGenre !== "1" ) {
+        if ($selectedGenre !== "1") {
             $url .= "&with_genres=" . $selectedGenre;
         }
 
-
-        // Sending a GET request to the TMDB API with verification disabled
         $response = Http::withOptions(['verify' => false])->get($url);
-
-        // Checking if the response is successful
         if ($response->successful()) {
-            // Returning the JSON response
-            return $response->json();
+            $data = $response->json();
+            $movies = $data['results'];
+            $startIndex = $subPage * $moviesPerPage; // Calculate start index for 6 movies
+            $selectedMovies = array_slice($movies, $startIndex, $moviesPerPage);
+
+            // Add pagination data
+            $totalPages = ceil(count($movies) / $moviesPerPage);
+            $data['results'] = $selectedMovies;
+            $data['page'] = $fullPage;
+            $data['total_pages'] = $totalPages * 3; // Adjust total pages since we're dividing each API page into 3 parts
+
+            return $data;
         }
 
         throw new \Exception('Unable to fetch discovered movies from TMDB service: ' . $response->body());

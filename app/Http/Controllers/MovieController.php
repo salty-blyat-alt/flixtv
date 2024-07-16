@@ -42,15 +42,21 @@ class MovieController extends Controller
 
     public function populateHomePageMovie(Request $request) {
         $selectedGenre = $request->input('genre', '1');
+        $page = $request->input('page', 8);  // Default to page 1 if not specified
          try {
             // Call the service method to get popular movies
             $popularMovies = $this->tmdbService->getPopularMovies();
 
             // If a genre ID is provided, get discover movies by that genre
-            $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre);
+            $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre, $page);
 
             // Pass the data to the view
-            return view('pages.index2', ['popularMovies' => $popularMovies, 'discoverMovies' => $discoverMovies, 'selectedGenre' => $selectedGenre]);
+            return view('pages.index2', [
+                'popularMovies' => $popularMovies,
+            'discoverMovies' => $discoverMovies,
+            'selectedGenre' => $selectedGenre,
+            'currentPage' => $page,
+    'totalPages' => $discoverMovies['total_pages']]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

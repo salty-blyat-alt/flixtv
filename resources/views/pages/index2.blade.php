@@ -67,33 +67,49 @@
                         <div class="catalog__select-wrap">
 
                             {{-- filter the movie by genre --}}
-                            <form id="genreForm" action="{{ url('/') }}" method="GET"> <!-- Ensure the form submits using GET method -->
+                            <form id="genreForm" action="{{ url('/') }}" method="GET">
+                                <!-- Ensure the form submits using GET method -->
                                 <select class="catalog__select" name="genre" onchange="submit()">
-                                    <option selected value="1" {{ $selectedGenre == '1' ? 'selected' : '' }}>All genres</option>
-                                    <option value="28" {{ $selectedGenre == '28' ? 'selected' : '' }}>Action</option>
-                                    <option value="12" {{ $selectedGenre == '12' ? 'selected' : '' }}>Adventure</option>
-                                    <option value="16" {{ $selectedGenre == '16' ? 'selected' : '' }}>Animation</option>
-                                    <option value="35" {{ $selectedGenre == '35' ? 'selected' : '' }}>Comedy</option>
+                                    <option selected value="1" {{ $selectedGenre == '1' ? 'selected' : '' }}>All
+                                        genres</option>
+                                    <option value="28" {{ $selectedGenre == '28' ? 'selected' : '' }}>Action
+                                    </option>
+                                    <option value="12" {{ $selectedGenre == '12' ? 'selected' : '' }}>Adventure
+                                    </option>
+                                    <option value="16" {{ $selectedGenre == '16' ? 'selected' : '' }}>Animation
+                                    </option>
+                                    <option value="35" {{ $selectedGenre == '35' ? 'selected' : '' }}>Comedy
+                                    </option>
                                     <option value="80" {{ $selectedGenre == '80' ? 'selected' : '' }}>Crime</option>
-                                    <option value="99" {{ $selectedGenre == '99' ? 'selected' : '' }}>Documentary</option>
+                                    <option value="99" {{ $selectedGenre == '99' ? 'selected' : '' }}>Documentary
+                                    </option>
                                     <option value="18" {{ $selectedGenre == '18' ? 'selected' : '' }}>Drama</option>
-                                    <option value="10751" {{ $selectedGenre == '10751' ? 'selected' : '' }}>Family</option>
-                                    <option value="14" {{ $selectedGenre == '14' ? 'selected' : '' }}>Fantasy</option>
-                                    <option value="36" {{ $selectedGenre == '36' ? 'selected' : '' }}>History</option>
-                                    <option value="27" {{ $selectedGenre == '27' ? 'selected' : '' }}>Horror</option>
-                                    <option value="10402" {{ $selectedGenre == '10402' ? 'selected' : '' }}>Music</option>
-                                    <option value="9648" {{ $selectedGenre == '9648' ? 'selected' : '' }}>Mystery</option>
-                                    <option value="10749" {{ $selectedGenre == '10749' ? 'selected' : '' }}>Romance</option>
-                                    <option value="878" {{ $selectedGenre == '878' ? 'selected' : '' }}>Science Fiction</option>
-                                    <option value="10770" {{ $selectedGenre == '10770' ? 'selected' : '' }}>TV Movie</option>
-                                    <option value="53" {{ $selectedGenre == '53' ? 'selected' : '' }}>Thriller</option>
-                                    <option value="10752" {{ $selectedGenre == '10752' ? 'selected' : '' }}>War</option>
-                                    <option value="37" {{ $selectedGenre == '37' ? 'selected' : '' }}>Western</option>
-                                 </select>
+                                    <option value="10751" {{ $selectedGenre == '10751' ? 'selected' : '' }}>Family
+                                    </option>
+                                    <option value="14" {{ $selectedGenre == '14' ? 'selected' : '' }}>Fantasy
+                                    </option>
+                                    <option value="36" {{ $selectedGenre == '36' ? 'selected' : '' }}>History
+                                    </option>
+                                    <option value="27" {{ $selectedGenre == '27' ? 'selected' : '' }}>Horror
+                                    </option>
+                                    <option value="10402" {{ $selectedGenre == '10402' ? 'selected' : '' }}>Music
+                                    </option>
+                                    <option value="9648" {{ $selectedGenre == '9648' ? 'selected' : '' }}>Mystery
+                                    </option>
+                                    <option value="10749" {{ $selectedGenre == '10749' ? 'selected' : '' }}>Romance
+                                    </option>
+                                    <option value="878" {{ $selectedGenre == '878' ? 'selected' : '' }}>Science
+                                        Fiction</option>
+                                    <option value="10770" {{ $selectedGenre == '10770' ? 'selected' : '' }}>TV Movie
+                                    </option>
+                                    <option value="53" {{ $selectedGenre == '53' ? 'selected' : '' }}>Thriller
+                                    </option>
+                                    <option value="10752" {{ $selectedGenre == '10752' ? 'selected' : '' }}>War
+                                    </option>
+                                    <option value="37" {{ $selectedGenre == '37' ? 'selected' : '' }}>Western
+                                    </option>
+                                </select>
                             </form>
-
-
-
 
                             <select class="catalog__select" name="years">
                                 <option value="All the years">All the years</option>
@@ -161,41 +177,16 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="catalog__paginator-wrap">
-                                <span class="catalog__pages">12 from 144</span>
+                                <span class="catalog__pages">{{ ceil(count($discoverMovies['results']) / 6) }}</span>
 
-                                <ul class="catalog__paginator">
-                                    <li>
-                                        <a href="#">
-                                            <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M0.75 5.36475L13.1992 5.36475" stroke-width="1.2"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M5.771 10.1271L0.749878 5.36496L5.771 0.602051"
-                                                    stroke-width="1.2" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li>
-                                        <a href="#">
-                                            <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M13.1992 5.3645L0.75 5.3645" stroke-width="1.2"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M8.17822 0.602051L13.1993 5.36417L8.17822 10.1271"
-                                                    stroke-width="1.2" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                            </svg>
-                                        </a>
-                                    </li>
+                                <ul class="catalog__paginator text-white" id="pagination">
+                                    <!-- Pagination buttons will be rendered here -->
                                 </ul>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
             <!-- end catalog -->
@@ -680,7 +671,92 @@
             <script src="js/jquery.magnific-popup.min.js"></script>
             <script src="js/plyr.min.js"></script>
             <script src="js/main.js"></script>
-            <script>const submit=()=> document.getElementById('genreForm').submit();</script>
+            <script>
+                const submit = () => document.getElementById('genreForm').submit();
+                let currentPage = 1;
+                let maxPages = 111;
+
+                function paginate({
+                    current,
+                    max
+                }) {
+                    if (!current || !max) return null;
+
+                    let prev = current === 1 ? null : current - 1,
+                        next = current === max ? null : current + 1,
+                        items = [1];
+
+                    if (current === 1 && max === 1) return {
+                        current,
+                        prev,
+                        next,
+                        items
+                    };
+                    if (current > 4) items.push('…');
+
+                    let r = 2,
+                        r1 = current - r,
+                        r2 = current + r;
+
+                    for (let i = r1 > 2 ? r1 : 2; i <= Math.min(max, r2); i++) items.push(i);
+
+                    if (r2 + 1 < max) items.push('…');
+                    if (r2 < max) items.push(max);
+
+                    return {
+                        current,
+                        prev,
+                        next,
+                        items
+                    };
+                }
+
+                function renderPagination(paginationData) {
+                    const paginationElement = document.getElementById('pagination');
+
+                    if (!paginationData) {
+                        paginationElement.innerHTML = '';
+                        return;
+                    }
+
+                    let html = '';
+
+                    if (paginationData.prev !== null) {
+                        html += `<li><button onclick="goToPage(${paginationData.prev})">Previous</button></li>`;
+                    }
+
+                    paginationData.items.forEach(item => {
+                        if (item === '…') {
+                            html += '<li><span>…</span></li>';
+                        } else {
+                            html += `<li><button onclick="goToPage(${item})">${item}</button></li>`;
+                        }
+                    });
+
+                    if (paginationData.next !== null) {
+                        html += `<li><button onclick="goToPage(${paginationData.next})">Next</button></li>`;
+                    }
+
+                    paginationElement.innerHTML = html;
+                }
+
+                function goToPage(page) {
+                    console.log(page)
+                    let paginationData = paginate({
+                        current: page,
+                        max: maxPages
+                    });
+                    renderPagination(paginationData);
+                }
+
+                let paginationData = paginate({
+                    current: currentPage,
+                    max: maxPages
+                });
+
+                // Initial render
+                renderPagination(paginationData);
+            </script>
 
 </body>
 

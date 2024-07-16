@@ -79,7 +79,7 @@
 
                     <!-- video player -->
                     <div class="col-12 col-xl-8">
-                        <div class="video-container" style="width: 100%; max-width: 800px; position: relative;">
+                        <div class="video-container mt-4" style="width: 100%; max-width: 800px; position: relative;">
                             <iframe src="https://www.2embed.cc/embed/{{ $movie['id'] }}" width="100%" height="500"
                                 frameborder="0" scrolling="no" allowfullscreen
                                 style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
