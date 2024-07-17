@@ -10,7 +10,7 @@ class TMDBService
     protected $baseUrl;
 
     public function __construct() {
-        $this->apiKey = env("TMDB_API_KEY"); // Accessing the environment variable
+        $this->apiKey = env("TMDB_API_KEY");
         $this->baseUrl = 'https://api.themoviedb.org/3';
     }
 
@@ -25,14 +25,10 @@ class TMDBService
         throw new \Exception('Unable to fetch top-rated movies from TMDB service: ' . $response->body());
     }
 
-
-
-
-    public function getDiscoverMovies($selectedGenre = 1, $fullPage = 1) {
-        $moviesPerPage = 6;
+    public function getDiscoverMovies($selectedGenre = 1, $fullPage = 0, $moviesPerPage = 20) {
         // Calculate the offset for 6 movies per "subpage"
-        $subPage = ($fullPage - 1) % 3; // This gives us values 0, 1, or 2
-        $pageBase = intdiv($fullPage - 1, 3) + 1; // TMDB API page to fetch
+        $subPage = ($fullPage - 1) % 3;
+        $pageBase = intdiv($fullPage - 1, 3) + 1;
 
         $url = $this->baseUrl . "/discover/movie?include_adult=false&include_video=false&language=en-US&page=$pageBase&sort_by=popularity.desc&api_key=$this->apiKey";
 
@@ -44,18 +40,20 @@ class TMDBService
         if ($response->successful()) {
             $data = $response->json();
             $movies = $data['results'];
-            $startIndex = $subPage * $moviesPerPage; // Calculate start index for 6 movies
+            $startIndex = $subPage * $moviesPerPage;
             $selectedMovies = array_slice($movies, $startIndex, $moviesPerPage);
 
             // Add pagination data
             $totalPages = ceil(count($movies) / $moviesPerPage);
             $data['results'] = $selectedMovies;
-            $data['page'] = $fullPage; 
+            $data['page'] = $fullPage;
             return $data;
         }
 
         throw new \Exception('Unable to fetch discovered movies from TMDB service: ' . $response->body());
     }
+
+
 
 
     public function getMovieDetails($id) {
@@ -69,11 +67,9 @@ class TMDBService
         if ($response->successful()) {
             $movieDetails = $response->json();
 
-            // Fetch movie certification (rating)
-            $certification = $this->getMovieCertification($id);
+             $certification = $this->getMovieCertification($id);
 
-            // Add certification to the movie details array
-            $movieDetails['certification'] = $certification;
+             $movieDetails['certification'] = $certification;
 
             return $movieDetails;
         }
@@ -88,8 +84,7 @@ class TMDBService
         if ($response->successful()) {
             $releaseData = $response->json();
 
-            // Find the certification for the primary country (e.g., US)
-            foreach ($releaseData['results'] as $result) {
+             foreach ($releaseData['results'] as $result) {
                 if ($result['iso_3166_1'] == 'US') {
                     foreach ($result['release_dates'] as $release) {
                         if ($release['type'] == 3) {
@@ -99,7 +94,7 @@ class TMDBService
                 }
             }
         }
-        return null; // Return null if certification not found or request fails
+        return null;
     }
 
     public function getPopularMovies() {
@@ -111,6 +106,17 @@ class TMDBService
             return $response->json();
         }
         throw new \Exception('Unable to fetch popular movies from TMDB service: ' . $response->body());
+    }
+
+    public function getUpcomingMovies() {
+        $url = $this->baseUrl . "/movie/upcoming?api_key=" . $this->apiKey . "&language=en-US&page=2";
+        $response = Http::withOptions(['verify' => false])->get($url);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('Unable to fetch top-rated movies from TMDB service: ' . $response->body());
     }
 
 }

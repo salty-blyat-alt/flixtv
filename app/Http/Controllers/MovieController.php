@@ -19,7 +19,61 @@ class MovieController extends Controller
         $this->embedService = $embedService;
     }
 
-    public function getMovieById($id = null) {
+
+    public function populateHomePageMovie(Request $request) {
+        $selectedGenre =$request->input('genre', '1');
+        $page = $request->input('page', 1);
+         try {
+            $popularMovies = $this->tmdbService->getPopularMovies();
+
+            // page -1 because not to make it look same as the hero section
+            $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre, $page-1,$moviesPerPage = 6);
+
+            return view('pages.index2', [
+            'popularMovies' => $popularMovies,
+            'discoverMovies' => $discoverMovies,
+            'selectedGenre' => $selectedGenre,
+            'currentPage' => $page ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function populateCatalogPage() {
+         try {
+
+            $topRates = $this->tmdbService->getTopRated();
+            $upComingMovies = $this->tmdbService->getUpcomingMovies();
+
+            return view('pages.catalog', [
+                'topRates' => $topRates,
+                'upComingMovies' => $upComingMovies
+        ]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function populateCategoryPage(Request $request ) {
+        $page = $request->input('page', 1);
+        $selectedGenre =$request->input('genre', '1');
+        try {
+
+            $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre, $page-1);
+
+            return view('pages.category', [
+                'discoverMovies' => $discoverMovies,
+                'selectedGenre' => $selectedGenre,
+                'currentPage' => $page ]);
+
+       } catch (\Exception $e) {
+           return response()->json(['error' => $e->getMessage()], 500);
+       }
+   }
+
+
+    public function getMovieById($id = 1) {
         if (!$id || $id < 0)  return view('pages.details', ['movie' => null, 'message' => 'No movie ID provided']);
 
         try {
@@ -36,28 +90,6 @@ class MovieController extends Controller
             return view('pages.details', ['movie' => $movieDetails, 'videoEmbed' => $videoEmbed]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error fetching movie details or video embed'], 500);
-        }
-    }
-
-
-    public function populateHomePageMovie(Request $request) {
-        $selectedGenre =$request->input('genre', '1');
-        $page = $request->input('page', 1);  // Default to page 1 if not specified
-         try {
-            // Call the service method to get popular movies
-            $popularMovies = $this->tmdbService->getPopularMovies();
-
-            // If a genre ID is provided, get discover movies by that genre
-            $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre, $page);
-
-            // Pass the data to the view
-            return view('pages.index2', [
-                'popularMovies' => $popularMovies,
-            'discoverMovies' => $discoverMovies,
-            'selectedGenre' => $selectedGenre,
-            'currentPage' => $page ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

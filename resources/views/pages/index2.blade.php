@@ -177,10 +177,8 @@
                     {{-- paginate section --}}
                     <div class="row">
                         <div class="col-12">
-                            <div class="catalog__paginator-wrap flex justify-center">
-                                <ul class="catalog__paginator text-white " id="pagination">
-                                </ul>
-                            </div>
+                            <ul class="catalog__paginator my-2 flex flex-wrap text-white w-100" id="pagination">
+                            </ul>
                         </div>
                     </div>
 
@@ -725,22 +723,25 @@
 
                     if (paginationData.prev !== null) {
                         html +=
-                            `<li><button class="bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-600 rounded px-4 py-2" onclick="goToPage(${paginationData.prev})">Previous</button></li>`;
+                            `<li><button class="text-white hover:bg-gray-700 active:bg-gray-600 rounded px-2 py-1" onclick="goToPage(${paginationData.prev})">Previous</button></li>`;
                     }
 
                     paginationData.items.forEach(item => {
                         if (item === '…') {
-                            html += '<li><span class="px-4 py-2 text-gray-400">…</span></li>';
+                            html += '<li><span class="px-2 py-2 text-gray-400">…</span></li>';
+                        } else if (item === currentPage) {
+                            html +=
+                                `<li><button class="bg-blue-700 text-white hover:bg-gray-600 active:bg-gray-500 rounded px-2 py-1" onclick="goToPage(${item})">${item}</button></li>`;
                         } else {
                             html +=
-                                `<li><button class="bg-gray-700 text-white hover:bg-gray-600 active:bg-gray-500 rounded px-4 py-2" onclick="goToPage(${item})">${item}</button></li>`;
-                                console.log(item)
+                                `<li><button class="text-white hover:bg-gray-600 active:bg-gray-500 rounded px-2 py-1" onclick="goToPage(${item})">${item}</button></li>`;
                         }
+
                     });
 
                     if (paginationData.next !== null) {
                         html +=
-                            `<li><button class="bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-600 rounded px-4 py-2" onclick="goToPage(${paginationData.next})">Next</button></li>`;
+                            `<li><button class="text-white hover:bg-gray-700 active:bg-gray-600 rounded px-2 py-1" onclick="goToPage(${paginationData.next})">Next</button></li>`;
                     }
 
 

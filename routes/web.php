@@ -17,8 +17,9 @@ use App\Http\Controllers\MovieController;
 
 
 Route::get('/', [MovieController::class, 'populateHomePageMovie']);
+Route::get('/catalog', [MovieController::class, 'populateCatalogPage']);
+Route::get('/category', [MovieController::class, 'populateCategoryPage']);
 
-Route::view('/catalog', 'pages.catalog');
 Route::view('/pricing', 'pages.pricing');
 Route::view('/live', 'pages.live');
 Route::view('/about', 'pages.about');
@@ -29,9 +30,6 @@ Route::view('/signin', 'pages.signin');
 Route::view('/privacy', 'pages.privacy');
 
 
-Route::get('/category/{category_slug?}', function($category_slug = 0) {
-    return view('pages.category', ['category_slug' => $category_slug]);
-});
 Route::get('/detail/{id?}', [MovieController::class, 'getMovieById']);
 
 
