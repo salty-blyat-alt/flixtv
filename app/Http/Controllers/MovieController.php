@@ -55,22 +55,29 @@ class MovieController extends Controller
         }
     }
 
-    public function populateCategoryPage(Request $request ) {
+    public function populateCategoryPage(Request $request)
+    {
         $page = $request->input('page', 1);
-        $selectedGenre =$request->input('genre', '1');
+        $selectedGenre = $request->input('genre', '1');
         try {
+            $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre, $page);
 
-            $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre, $page-1);
+            if ($request->ajax()) {
+                return response()->json([
+                    'movies' => $discoverMovies['results'],
+                    'lastPage' => $discoverMovies['total_pages']
+                ]);
+            }
 
             return view('pages.category', [
                 'discoverMovies' => $discoverMovies,
                 'selectedGenre' => $selectedGenre,
-                'currentPage' => $page ]);
-
-       } catch (\Exception $e) {
-           return response()->json(['error' => $e->getMessage()], 500);
-       }
-   }
+                'currentPage' => $page
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
 
     public function getMovieById($id = 1) {

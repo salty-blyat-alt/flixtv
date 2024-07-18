@@ -83,8 +83,7 @@
                 @foreach ($genres as $genre)
                     <x-category-card image="https://i.ibb.co/9Ym10G5/pepsi.jpg" title="{{ $genre['name'] }}"
                         value="{{ rand(100, 500) }}" link="/category?genre={{ $genre['id'] }}" />
-                @endforeach
-
+                @endforeach 
 
             </div>
         </div>
