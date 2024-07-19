@@ -116,73 +116,69 @@
                         </div>
                     </div>
 
-                        @php
-                            $genres = [
-                                28 => 'Action',
-                                12 => 'Adventure',
-                                16 => 'Animation',
-                                35 => 'Comedy',
-                                80 => 'Crime',
-                                99 => 'Documentary',
-                                18 => 'Drama',
-                                10751 => 'Family',
-                                14 => 'Fantasy',
-                                36 => 'History',
-                                27 => 'Horror',
-                                10402 => 'Music',
-                                9648 => 'Mystery',
-                                10749 => 'Romance',
-                                878 => 'Science Fiction',
-                                10770 => 'TV Movie',
-                                53 => 'Thriller',
-                                10752 => 'War',
-                                37 => 'Western',
-                            ];
-                        @endphp
-                   <div id="movie-container" class="row row--grid">
-                    @foreach ($discoverMovies['results'] as $discoverMovie)
-                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-                            <x-carousel-card :details-url="url('detail/' . $discoverMovie['id'])"
-                                :img-src="$discoverMovie['poster_path']
+                    @php
+                        $genres = [
+                            28 => 'Action',
+                            12 => 'Adventure',
+                            16 => 'Animation',
+                            35 => 'Comedy',
+                            80 => 'Crime',
+                            99 => 'Documentary',
+                            18 => 'Drama',
+                            10751 => 'Family',
+                            14 => 'Fantasy',
+                            36 => 'History',
+                            27 => 'Horror',
+                            10402 => 'Music',
+                            9648 => 'Mystery',
+                            10749 => 'Romance',
+                            878 => 'Science Fiction',
+                            10770 => 'TV Movie',
+                            53 => 'Thriller',
+                            10752 => 'War',
+                            37 => 'Western',
+                        ];
+                    @endphp
+                    <div id="movie-container" class="row row--grid">
+                        @foreach ($discoverMovies['results'] as $discoverMovie)
+                            <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                                <x-carousel-card :details-url="url('detail/' . $discoverMovie['id'])" :img-src="$discoverMovie['poster_path']
                                     ? 'https://image.tmdb.org/t/p/w500' . $discoverMovie['poster_path']
-                                    : 'img/card/11.png'"
-                                :rating="$discoverMovie['vote_average']"
-                                :title="$discoverMovie['title']"
-                                :year="substr($discoverMovie['release_date'], 0, 4)"
-                                :category="collect($discoverMovie['genre_ids'])
-                                    ->map(function ($genre_id) use ($genres) {
-                                        return $genres[$genre_id];
-                                    })
-                                    ->implode(', ')" />
-                        </div>
-                    @endforeach
-                </div>
-                <div id="loading" style="display: none;">Loading...</div>
+                                    : 'img/card/11.png'" :rating="$discoverMovie['vote_average']" :title="$discoverMovie['title']"
+                                    :year="substr($discoverMovie['release_date'], 0, 4)" :category="collect($discoverMovie['genre_ids'])
+                                        ->map(function ($genre_id) use ($genres) {
+                                            return $genres[$genre_id];
+                                        })
+                                        ->implode(', ')" />
+                            </div>
+                        @endforeach
+                    </div>
+                    <div id="loading" style="display: none;">Loading...</div>
 
-                <script>
-                let page = {{ $currentPage }};
-                let loading = false;
-                let selectedGenre = '{{ $selectedGenre }}';
-                let lastPage = {{ $discoverMovies['total_pages'] }};
+                    <script>
+                        let page = {{ $currentPage }};
+                        let loading = false;
+                        let selectedGenre = '{{ $selectedGenre }}';
+                        let lastPage = {{ $discoverMovies['total_pages'] }};
+ 
 
-                function loadMovies() {
-                    if (loading || page > lastPage) return;
+                        function loadMovies() {
+                            if (loading || page > lastPage) return;
 
-                    loading = true;
-                    document.getElementById('loading').style.display = 'block';
+                            loading = true;
+                            document.getElementById('loading').style.display = 'block';
 
-                    fetch(`/category?page=${page}&genre=${selectedGenre}`, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            const movieContainer = document.getElementById('movie-container');
-                            data.movies.forEach(movie => {
-                                const movieElement = document.createElement('div');
-                                movieElement.className = 'col-6 col-sm-4 col-lg-3 col-xl-2';
-                                movieElement.innerHTML = `
+                            fetch(`/category?page=${page}&genre=${selectedGenre}`, {
+                                    headers: {
+                                        'X-Requested-With': 'XMLHttpRequest'
+                                    }})
+                                .then(response => response.json())
+                                .then(data => {
+                                    const movieContainer = document.getElementById('movie-container');
+                                    data.movies.forEach(movie => {
+                                        const movieElement = document.createElement('div');
+                                        movieElement.className = 'col-6 col-sm-4 col-lg-3 col-xl-2';
+                                        movieElement.innerHTML = `
                                     <div class="card">
                                         <a href="/detail/${movie.id}" class="card__cover">
                                             <img src="${movie.poster_path
@@ -215,25 +211,25 @@
                                         </div>
                                     </div>
                                 `;
-                                movieContainer.appendChild(movieElement);
-                            });
-                            page++;
-                            lastPage = data.lastPage;
-                            loading = false;
-                            document.getElementById('loading').style.display = 'none';
-                        });
-                }
+                                        movieContainer.appendChild(movieElement);
+                                    });
+                                    page++;
+                                    lastPage = data.lastPage;
+                                    loading = false;
+                                    document.getElementById('loading').style.display = 'none';
+                                });
+                        }
 
-                window.addEventListener('scroll', () => {
-                    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-                        loadMovies();
-                    }
-                });
-                </script>
-                    </div>
+                        window.addEventListener('scroll', () => {
+                            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                                loadMovies();
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- end catalog -->
 

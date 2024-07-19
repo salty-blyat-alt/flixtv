@@ -29,6 +29,13 @@ class MovieController extends Controller
             // page -1 because not to make it look same as the hero section
             $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre, $page-1,$moviesPerPage = 6);
 
+            if ($request->ajax()) {
+                return response()->json([
+                    'discoverMovies' => $discoverMovies['results'],
+                    'currentPage' => $page,
+                    'selectedGenre' => $selectedGenre
+                ]);}
+
             return view('pages.index2', [
             'popularMovies' => $popularMovies,
             'discoverMovies' => $discoverMovies,
