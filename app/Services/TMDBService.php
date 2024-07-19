@@ -13,7 +13,7 @@ class TMDBService
         $this->apiKey = env("TMDB_API_KEY");
         $this->baseUrl = 'https://api.themoviedb.org/3';
     }
-
+// Movie api section
     public function getTopRated() {
         $url = $this->baseUrl . "/movie/top_rated?api_key=" . $this->apiKey . "&language=en-US&page=1";
         $response = Http::withOptions(['verify' => false])->get($url);
@@ -52,9 +52,6 @@ class TMDBService
 
         throw new \Exception('Unable to fetch discovered movies from TMDB service: ' . $response->body());
     }
-
-
-
 
     public function getMovieDetails($id) {
         if (!$id || $id < 0) {
@@ -118,5 +115,19 @@ class TMDBService
 
         throw new \Exception('Unable to fetch top-rated movies from TMDB service: ' . $response->body());
     }
+
+// TV show section
+public function getTVshows($page = 1){
+    $url = $this->baseUrl . "/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=$page&sort_by=popularity.desc&api_key=$this->apiKey";
+
+    $response = Http::withOptions(['verify' => false])->get($url);
+
+    if ($response->successful()) {
+        return $response->json();
+    }
+    throw new \Exception('Unable to fetch popular movies from TMDB service: ' . $response->body());
+
+
+}
 
 }

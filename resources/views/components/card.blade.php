@@ -31,9 +31,6 @@
             </ul>
             <p class="card__tagline">
             <ul class="card__list flex flex-wrap">
-                {{-- @foreach ($tags as $tag)
-                    <li>{{ $tag }}</li>
-                @endforeach --}}
             </ul>
             </p>
         </div>

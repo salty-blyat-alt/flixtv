@@ -1,6 +1,6 @@
 <div class="card">
     <a href="{{ $link }}" class="card__cover">
-        <img src="{{ asset($image) }}" alt="">
+        <img src="{{ asset($image) }}" alt="{{ $title }}">
         <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M13.1615 8.05308C13.1615 9.79908 11.7455 11.2141 9.9995 11.2141C8.2535 11.2141 6.8385 9.79908 6.8385 8.05308C6.8385 6.30608 8.2535 4.89108 9.9995 4.89108C11.7455 4.89108 13.1615 6.30608 13.1615 8.05308Z"
@@ -17,7 +17,4 @@
         </svg>
     </button>
     <h3 class="card__title card__title--subs"><a href="{{ $link }}">{{ $title }}</a></h3>
-    <ul class="card__list card__list--subs">
-        <li>{{ $description }}</li>
-    </ul>
 </div>

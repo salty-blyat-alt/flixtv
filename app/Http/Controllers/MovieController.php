@@ -25,7 +25,7 @@ class MovieController extends Controller
         $page = $request->input('page', 1);
          try {
             $popularMovies = $this->tmdbService->getPopularMovies();
-
+            $tvShows = $this->tmdbService->getTVshows();
             // page -1 because not to make it look same as the hero section
             $discoverMovies = $this->tmdbService->getDiscoverMovies($selectedGenre, $page-1,$moviesPerPage = 6);
 
@@ -39,6 +39,7 @@ class MovieController extends Controller
             return view('pages.index2', [
             'popularMovies' => $popularMovies,
             'discoverMovies' => $discoverMovies,
+            'tvShows' => $tvShows,
             'selectedGenre' => $selectedGenre,
             'currentPage' => $page ]);
         } catch (\Exception $e) {

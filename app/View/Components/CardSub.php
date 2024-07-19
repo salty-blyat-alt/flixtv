@@ -9,14 +9,12 @@ class CardSub extends Component
     public $image;
     public $link;
     public $title;
-    public $description;
 
-    public function __construct($image, $link, $title, $description)
+    public function __construct($image, $link, $title)
     {
         $this->image = $image;
         $this->link = $link;
         $this->title = $title;
-        $this->description = $description;
     }
 
     public function render()
