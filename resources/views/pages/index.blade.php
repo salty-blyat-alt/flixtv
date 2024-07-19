@@ -38,8 +38,7 @@
 
 <body>
     <!-- header (fixed style) -->
-    <x-navbar />
-
+     
     <!-- end header -->
 
     <!-- home -->
@@ -132,53 +131,11 @@
                         </div>
                     </div>
 
-                    <div class="row row--grid">
-
-                        @php
-                            $genres = [
-                                28 => 'Action',
-                                12 => 'Adventure',
-                                16 => 'Animation',
-                                35 => 'Comedy',
-                                80 => 'Crime',
-                                99 => 'Documentary',
-                                18 => 'Drama',
-                                10751 => 'Family',
-                                14 => 'Fantasy',
-                                36 => 'History',
-                                27 => 'Horror',
-                                10402 => 'Music',
-                                9648 => 'Mystery',
-                                10749 => 'Romance',
-                                878 => 'Science Fiction',
-                                10770 => 'TV Movie',
-                                53 => 'Thriller',
-                                10752 => 'War',
-                                37 => 'Western',
-                            ];
-                        @endphp
-
-                        @foreach ($discoverMovies['results'] as $discoverMovie)
-                            @php
-                                $movieGenres = array_map(
-                                    fn($id) => $genres[$id] ?? 'Unknown',
-                                    $discoverMovie['genre_ids'],
-                                );
-                            @endphp
-
-                            <x-card title="{{ $discoverMovie['title'] }}"
-                                image="{{ $discoverMovie['poster_path'] ? 'https://image.tmdb.org/t/p/w500' . $discoverMovie['poster_path'] : 'default-image-path.jpg' }}"
-                                link="{{ url('detail/' . $discoverMovie['id']) }}"
-                                rating="{{ $discoverMovie['vote_average'] }}"
-                                year="{{ date('Y', strtotime($discoverMovie['release_date'])) }}" :tags="$movieGenres"
-                                tagline="" />
-                        @endforeach
+                    <div class="row row--grid" id="discoverMoviesContainer">
                     </div>
                     {{-- paginate section --}}
                     <div class="row">
                         <div class="col-12">
-                    <h1 class="text-white text-xl">Hellodasdddddasfasf</h1>
-
                             <ul class="catalog__paginator my-2 flex flex-wrap text-white w-100" id="pagination">
                             </ul>
                         </div>
@@ -674,7 +631,27 @@
                 let currentPage = parseInt(@json($currentPage), 10);
                 let maxPages = parseInt(500);
                 let selectedGenre = parseInt(@json($selectedGenre), 10);
-
+                const genres = {
+                    28: 'Action',
+                    12: 'Adventure',
+                    16: 'Animation',
+                    35: 'Comedy',
+                    80: 'Crime',
+                    99: 'Documentary',
+                    18: 'Drama',
+                    10751: 'Family',
+                    14: 'Fantasy',
+                    36: 'History',
+                    27: 'Horror',
+                    10402: 'Music',
+                    9648: 'Mystery',
+                    10749: 'Romance',
+                    878: 'Science Fiction',
+                    10770: 'TV Movie',
+                    53: 'Thriller',
+                    10752: 'War',
+                    37: 'Western'
+                };
 
                 function paginate({
                     current,
@@ -764,7 +741,45 @@
                     current: currentPage,
                     max: maxPages
                 });
+                document.addEventListener('DOMContentLoaded', function() {
+                    fetchMovies();
+                });
 
+                function fetchMovies(selectedGenre, age) {
+                    fetch('/?genre=')
+                        .then(response => response.json())
+                        .then(data => {
+                            renderMovies(data.discoverMovies.results);
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+
+                function renderMovies(movies) {
+                    const container = document.getElementById('discoverMoviesContainer');
+                    let html = '';
+
+                    movies.forEach(movie => {
+                        const movieGenres = movie.genre_ids.map(id => genres[id] || 'Unknown');
+                        const genresString = movieGenres.join(', ');
+
+                        html += `
+                <div class="card">
+                    <img src="${movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'default-image-path.jpg'}" alt="${movie.title}">
+                    <h3>${movie.title}</h3>
+                    <p>Rating: ${movie.vote_average}</p>
+                    <p>Year: ${new Date(movie.release_date).getFullYear()}</p>
+                    <p>Genres: ${genresString}</p>
+                    <a href="${url('detail/' + movie.id)}">View Details</a>
+                </div>
+            `;
+                    });
+
+                    container.innerHTML = html;
+                }
+
+                function url(path) {
+                    return `${window.location.origin}/${path}`;
+                }
 
                 renderPagination(paginationData);
             </script>
