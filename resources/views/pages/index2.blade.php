@@ -46,7 +46,7 @@
     <div class="home ">
         <div class="home__carousel owl-carousel " id="flixtv-hero">
             @foreach ($popularMovies['results'] as $popularMovies)
-                <x-card-home :link="'detail/' . $popularMovies['id']" :image="$popularMovies['poster_path']
+                <x-card-home :link="'movie/detail/' . $popularMovies['id']" :image="$popularMovies['poster_path']
                     ? 'https://image.tmdb.org/t/p/original' . $popularMovies['poster_path']
                     : asset('img/home/2.jpg')" :title="$popularMovies['title']" />
             @endforeach
@@ -159,7 +159,7 @@
                                     @foreach ($tvShows['results'] as $show)
                                     <x-card-sub
                                         image="{{ $show['poster_path'] ? 'https://image.tmdb.org/t/p/w500' . $show['poster_path'] : '' }}"
-                                        link="details/{{ $show['id'] }}"
+                                        link="tv/detail/{{ $show['id'] }}?s=1&e=1"
                                         title="{{ $show['name'] }}"
                                         {{-- description="{{ $show['overview'] }}" --}}
                                     />
@@ -637,7 +637,7 @@
                                 const genres = movie.genre_ids.map(id => genreMapping[id] || 'Unknown').join(', ');
                                 movieElement.innerHTML = `
                     <div class="card card--big">
-                        <a href="/detail/${movie.id}" class="card__cover">
+                        <a href="movie/detail/${movie.id}" class="card__cover">
                             <img src="${movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'default-image-path.jpg'}" alt="">
                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -662,7 +662,7 @@
                             ${movie.vote_average}
                         </span>
                         <div class="card__content">
-                            <h3 class="card__title"><a href="/detail/${movie.id}">${movie.title}</a></h3>
+                            <h3 class="card__title"><a href="movie/detail/${movie.id}">${movie.title}</a></h3>
                             <ul class="card__list">
                                 <li>${movie.tagline || ''}</li>
                             </ul>

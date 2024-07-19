@@ -30,6 +30,7 @@ Route::view('/signin', 'pages.signin');
 Route::view('/privacy', 'pages.privacy');
 
 
-Route::get('/detail/{id?}', [MovieController::class, 'getMovieById']);
+// Route::get('movie/detail/{id?}', [MovieController::class, 'getMovieById']);
+Route::get('tv/detail/{id?}', [MovieController::class, 'getTvShow']);
 
 

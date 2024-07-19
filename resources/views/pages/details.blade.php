@@ -59,7 +59,7 @@
 
                         <!-- article content -->
                         <div class="article__content">
-                            <h1>{{ $movie['title'] }}</h1>
+                            <h1>{{ $movie['title'] }}    {{$tvDetail[]}}</h1>
 
                             <ul class="list">
                                 <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

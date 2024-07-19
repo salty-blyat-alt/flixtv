@@ -142,7 +142,7 @@
                     <div id="movie-container" class="row row--grid">
                         @foreach ($discoverMovies['results'] as $discoverMovie)
                             <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-                                <x-carousel-card :details-url="url('detail/' . $discoverMovie['id'])" :img-src="$discoverMovie['poster_path']
+                                <x-carousel-card :details-url="url('movie/detail/' . $discoverMovie['id'])" :img-src="$discoverMovie['poster_path']
                                     ? 'https://image.tmdb.org/t/p/w500' . $discoverMovie['poster_path']
                                     : 'img/card/11.png'" :rating="$discoverMovie['vote_average']" :title="$discoverMovie['title']"
                                     :year="substr($discoverMovie['release_date'], 0, 4)" :category="collect($discoverMovie['genre_ids'])
@@ -160,7 +160,7 @@
                         let loading = false;
                         let selectedGenre = '{{ $selectedGenre }}';
                         let lastPage = {{ $discoverMovies['total_pages'] }};
- 
+
 
                         function loadMovies() {
                             if (loading || page > lastPage) return;
@@ -180,7 +180,7 @@
                                         movieElement.className = 'col-6 col-sm-4 col-lg-3 col-xl-2';
                                         movieElement.innerHTML = `
                                     <div class="card">
-                                        <a href="/detail/${movie.id}" class="card__cover">
+                                        <a href="movie/detail/${movie.id}" class="card__cover">
                                             <img src="${movie.poster_path
                                                 ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path
                                                 : 'img/card/11.png'}" alt="${movie.title}">
@@ -204,7 +204,7 @@
                                             </svg>
                                             ${movie.vote_average}
                                         </span>
-                                        <h3 class="card__title"><a href="/detail/${movie.id}">${movie.title}</a></h3>
+                                        <h3 class="card__title"><a href="movie/detail/${movie.id}">${movie.title}</a></h3>
                                         <div class="flex justify-between gap-x-4 text-white text-sm">
                                             <span>${movie.genres}</span>
                                             <span>${movie.release_date.substr(0, 4)}</span>

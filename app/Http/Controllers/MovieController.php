@@ -96,7 +96,7 @@ class MovieController extends Controller
             $movieDetails = $this->tmdbService->getMovieDetails($id);
 
             // Call the service method to proxy the video embed HTML
-            $videoEmbedResponse = $this->embedService->proxyVideo($id);
+            $videoEmbedResponse = $this->embedService->getMovieVideoById($id);
 
             // Check if the response is valid HTML
             $videoEmbed = $videoEmbedResponse->getContent(); // Get the HTML content
@@ -106,5 +106,27 @@ class MovieController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error fetching movie details or video embed'], 500);
         }
+    }
+
+
+    public function getTvShow(Request $request, $id = 1){
+        $season = $request->input('s', 1);
+        $episode = $request->input('e', 1);
+        try {
+            // Call the service method to get movie details
+            $tvDetail = $this->tmdbService->getTvShowDetail($id);
+
+            // Call the service method to proxy the video embed HTML
+            // $videoEmbedResponse = $this->embedService->proxyTvShowVideo($id, $season, $episode);
+
+            // Check if the response is valid HTML
+            // $videoEmbed = $videoEmbedResponse->getContent(); // Get the HTML content
+
+            // Pass movie details and video embed HTML to the view
+            return view('pages.details', ['tvDetail' => $tvDetail]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error fetching movie details or video embed'], 500);
+        }
+
     }
 }

@@ -129,5 +129,26 @@ public function getTVshows($page = 1){
 
 
 }
+public function getTvShowDetail($id)
+{
+    if (!$id || $id < 0) {
+        throw new \InvalidArgumentException('Invalid TV show ID provided');
+    }
 
+    $url = $this->baseUrl. "/tv/" . $id . "?api_key=" . $this->apiKey;
+    Log::info('get tv url '. $url);
+    try {
+        // Make the HTTP GET request with SSL verification disabled
+        $response = Http::withOptions(['verify' => false])->get($url);
+
+        if ($response->successful()) {
+            return $response->json(); // Return decoded JSON response
+        }
+
+        throw new \Exception('Unable to fetch data from TMDB service: ' . $response->status());
+    } catch (\Exception $e) {
+        Log::error('Error fetching TV show details: ' . $e->getMessage());
+        throw $e; // Re-throw exception for the caller to handle
+    }
+}
 }
