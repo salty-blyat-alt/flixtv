@@ -23,23 +23,10 @@
                                 href="/catalog" role="button">Catalog</a>
                         </li>
                         <li class="header__nav-item">
-                            <a class="header__nav-link {{ request()->is('pricing') ? 'text-blue-500' : '' }}"
-                                href="/pricing" role="button">Pricing Plans</a>
-                        </li> 
-
-                        <li class="header__nav-item">
-                            <a class="header__nav-link header__nav-link--more" href="#" role="button"
-                                id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">More</a>
-                            <ul class="dropdown-menu header__nav-menu header__nav-menu--scroll"
-                                aria-labelledby="dropdownMenu3">
-                                <li><a class="{{ request()->is('about') ? 'text-blue-500' : '' }}" href="about">About
-                                        us</a></li>
-                                <li><a class="{{ request()->is('contacts') ? 'text-blue-500' : '' }}"
-                                        href="contacts">Contacts</a></li>
-                            </ul>
+                            <a class="header__nav-link {{ request()->is('catalog') ? 'text-blue-500' : '' }}"
+                                href="/catalog" role="button">About
+                                us</a>
                         </li>
-
                     </ul>
 
                     <div class="header__actions">
