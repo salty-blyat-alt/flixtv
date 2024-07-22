@@ -151,7 +151,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 pt-4">
-                            <h2 class="section__title">Subscriptions</h2>
+                            <h2 class="section__title">Tv Shows</h2>
                         </div>
                         <div class="col-12">
                             <div class="section__carousel-wrap">

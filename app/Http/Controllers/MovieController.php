@@ -123,7 +123,12 @@ class MovieController extends Controller
             // $videoEmbed = $videoEmbedResponse->getContent(); // Get the HTML content
 
             // Pass movie details and video embed HTML to the view
-            return view('pages.details', ['tvDetail' => $tvDetail]);
+            return view('pages.details', [
+                'tvDetail' => $tvDetail,
+            'id'=> $id,
+            'season'=> $season,
+            'episode' => $episode
+        ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error fetching movie details or video embed'], 500);
         }

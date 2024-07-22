@@ -117,7 +117,7 @@ class TMDBService
     }
 
 // TV show section
-public function getTVshows($page = 1){
+    public function getTVshows($page = 1){
     $url = $this->baseUrl . "/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=$page&sort_by=popularity.desc&api_key=$this->apiKey";
 
     $response = Http::withOptions(['verify' => false])->get($url);
@@ -128,27 +128,28 @@ public function getTVshows($page = 1){
     throw new \Exception('Unable to fetch popular movies from TMDB service: ' . $response->body());
 
 
-}
-public function getTvShowDetail($id)
-{
+    }
+
+
+    public function getTvShowDetail($id){
     if (!$id || $id < 0) {
         throw new \InvalidArgumentException('Invalid TV show ID provided');
     }
 
-    $url = $this->baseUrl. "/tv/" . $id . "?api_key=" . $this->apiKey;
-    Log::info('get tv url '. $url);
-    try {
-        // Make the HTTP GET request with SSL verification disabled
-        $response = Http::withOptions(['verify' => false])->get($url);
+        $url = $this->baseUrl. "/tv/" . $id . "?api_key=" . $this->apiKey;
+        try {
+            // Make the HTTP GET request with SSL verification disabled
+            $response = Http::withOptions(['verify' => false])->get($url);
 
-        if ($response->successful()) {
-            return $response->json(); // Return decoded JSON response
+            if ($response->successful()) {
+                return $response->json(); // Return decoded JSON response
+            }
+
+            throw new \Exception('Unable to fetch data from TMDB service: ' . $response->status());
+        } catch (\Exception $e) {
+            Log::error('Error fetching TV show details: ' . $e->getMessage());
+            throw $e; // Re-throw exception for the caller to handle
         }
+    } 
 
-        throw new \Exception('Unable to fetch data from TMDB service: ' . $response->status());
-    } catch (\Exception $e) {
-        Log::error('Error fetching TV show details: ' . $e->getMessage());
-        throw $e; // Re-throw exception for the caller to handle
-    }
-}
 }
