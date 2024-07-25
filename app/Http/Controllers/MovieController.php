@@ -104,34 +104,36 @@ class MovieController extends Controller
             // Pass movie details and video embed HTML to the view
             return view('pages.details', ['movie' => $movieDetails, 'videoEmbed' => $videoEmbed]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error fetching movie details or video embed'], 500);
+            return response()->json(['error' => 'Error getMovieById from movie controller'], 500);
         }
     }
 
 
-    public function getTvShow(Request $request, $id = 1){
-        $season = $request->input('s', 1);
-        $episode = $request->input('e', 1);
+    public function getTvShow(Request $request, $id = 1) {
+        $season = $request->input('season', 1);
+        $episode = $request->input('episode', 1);
+
         try {
-            // Call the service method to get movie details
-            $tvDetail = $this->tmdbService->getTvShowDetail($id);
+        // Call the service method to get movie details
+        $tvDetail = $this->tmdbService->getTvShowDetail($id);
+        $episodes = $this->tmdbService->getEpisodeBySeason($id, $season);
 
-            // Call the service method to proxy the video embed HTML
-            // $videoEmbedResponse = $this->embedService->proxyTvShowVideo($id, $season, $episode);
-
-            // Check if the response is valid HTML
-            // $videoEmbed = $videoEmbedResponse->getContent(); // Get the HTML content
-
-            // Pass movie details and video embed HTML to the view
+        // Check if the request is an AJAX request
+        if ($request->ajax()) {
+            return response()->json([
+                'tvDetail' => $tvDetail,
+                'season' => $season,
+                'episode' => $episode,
+                'episodes' => $episodes
+            ]);
+        } else {
+            // Return the view if not an AJAX request
             return view('pages.details', [
                 'tvDetail' => $tvDetail,
-            'id'=> $id,
-            'season'=> $season,
-            'episode' => $episode
-        ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Error fetching movie details or video embed'], 500);
+                'season' => $season,
+                'episode' => $episode,
+                'episodes' => $episodes
+            ]);
         }
-
-    }
+    } catch (\Exception $e) { return response()->json(['error' => 'Error getTvShow from movie controller'], 500); } }
 }
