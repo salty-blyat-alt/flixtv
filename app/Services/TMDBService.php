@@ -8,7 +8,6 @@ class TMDBService
 {
     protected $apiKey;
     protected $baseUrl;
-
     public function __construct() {
         $this->apiKey = env('TMDB_API_KEY');
         $this->baseUrl = 'https://api.themoviedb.org/3';
