@@ -43,7 +43,7 @@
     <!-- end header -->
 
     <!-- home -->
-    <div class="home ">
+    <div class="home">
         <div class="home__carousel owl-carousel " id="flixtv-hero">
             @foreach ($popularMovies['results'] as $popularMovies)
                 <x-card-home :link="'movie/detail/' . $popularMovies['id']" :image="$popularMovies['poster_path']
@@ -110,26 +110,8 @@
                                     </option>
                                 </select>
                             </form>
-
-                            {{-- <select class="catalog__select" name="years">
-                                <option value="All the years">All the years</option>
-                                <option value="1">'50s</option>
-                                <option value="2">'60s</option>
-                                <option value="3">'70s</option>
-                                <option value="4">'80s</option>
-                                <option value="5">'90s</option>
-                                <option value="6">2000-10</option>
-                                <option value="7">2010-20</option>
-                                <option value="8">2021</option>
-                            </select> --}}
                         </div>
 
-                        <div class="slider-radio">
-                            <input type="radio" name="grade" id="featured" checked="checked"><label
-                                for="featured">Featured</label>
-                            <input type="radio" name="grade" id="popular"><label for="popular">Popular</label>
-                            <input type="radio" name="grade" id="newest"><label for="newest">Newest</label>
-                        </div>
                     </div>
 
                     <div class="row row--grid" id='discoverMoviesContainer'>

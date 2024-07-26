@@ -2468,6 +2468,16 @@ body::-webkit-scrollbar-thumb {
     margin-top: 20px;
   }
 }
+.selected-episode .series__cover:before {
+    opacity: 0.9;
+  } 
+  .selected-episode .series__cover svg {
+    stroke: #2f80ed;
+  }
+  .selected-episode .series__title a {
+    color: #2f80ed;
+  }
+
 /*==============================
 	Category
 ==============================*/

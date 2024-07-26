@@ -19,6 +19,33 @@ class MovieController extends Controller
         $this->embedService = $embedService;
     }
 
+    public function search($searchTerm = null) {
+        try {
+            $searchTerm = urldecode($searchTerm); // Decode the search term
+
+            // Search for movies
+            $moviesResult = $this->tmdbService->searchMovies($searchTerm);
+
+            // Search for TV shows
+            $tvShowsResult = $this->tmdbService->searchTVShows($searchTerm);
+
+            // Combine the results
+            $combinedResults = [
+                'movies' => $moviesResult['results'] ?? [],
+                'tv_shows' => $tvShowsResult['results'] ?? [],
+            ];
+
+            // Return the search view with combined results
+            return view('pages.search', ['result' => $combinedResults]);
+        } catch (\Exception $e) {
+            // Log the error and return an error response
+            Log::error('Search error: ' . $e->getMessage());
+            return response()->json(['error' => 'Unable to perform search'], 500);
+        }
+    }
+
+
+
 
     public function populateHomePageMovie(Request $request) {
         $selectedGenre =$request->input('genre', '1');
@@ -36,7 +63,7 @@ class MovieController extends Controller
                     'selectedGenre' => $selectedGenre
                 ]);}
 
-            return view('pages.index2', [
+            return view('pages.index', [
             'popularMovies' => $popularMovies,
             'discoverMovies' => $discoverMovies,
             'tvShows' => $tvShows,

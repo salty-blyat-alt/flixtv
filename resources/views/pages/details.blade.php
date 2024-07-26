@@ -140,7 +140,7 @@
                                     </div>
                                 </div>
 
-                                <button class="section__nav section__nav--series section__nav--prev" data-nav="#series"
+                                {{-- <button class="section__nav section__nav--series section__nav--prev" data-nav="#series"
                                     type="button"><svg width="17" height="15" viewBox="0 0 17 15" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M1.25 7.72559L16.25 7.72559" stroke-width="1.5" stroke-linecap="round"
@@ -148,7 +148,7 @@
                                         <path d="M7.2998 1.70124L1.2498 7.72524L7.2998 13.7502" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg></button>
-                                <button class="section__nav section__nav--series section__nav--next" data-nav="#series"
+                                <button class="section__nav section__nav--series section__nav--next" data-nav="#series" --}}
                                     type="button"><svg width="17" height="15" viewBox="0 0 17 15"
                                         fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M15.75 7.72559L0.75 7.72559" stroke-width="1.5"
@@ -217,28 +217,31 @@
 
 
 
-const handleChangeEpisode = (id,showId, season = 1) => {
-    const url = `https://www.2embed.cc/embedtv/${showId}&s=${season}&e=${id}`;
+    const handleChangeEpisode = (id = 1, showId, season = 1) => {
+        console.log('id', id)
+        console.log('showid', showId)
+        console.log('season', season)
+        const url = `https://www.2embed.cc/embedtv/${showId}&s=${season}&e=${id}`;
 
-    const videoPlayer = document.getElementById('videoPlayer');
-    videoPlayer.innerHTML = '';
-    videoPlayer.innerHTML = `
+        const videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.innerHTML = '';
+        videoPlayer.innerHTML = `
         <iframe src="${url}" width="100%" height="500"
             frameborder="0" scrolling="no" allowfullscreen
             style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
         </iframe>`;
         loadEpisodes(season, id);
-};
+    };
 
 
 
-    function loadEpisodes(season, episode=1) {
+    function loadEpisodes(season, selectedEpisode = 1) {
         $.ajax({
-            url: `/tv/detail/${tvShowId}?season=${season}&episode=${episode}`,
+            url: `/tv/detail/${tvShowId}?season=${season}&episode=${selectedEpisode }`,
             method: 'GET',
             data: {
                 season: season,
-                episode: episode
+                episode: selectedEpisode
             },
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
@@ -251,9 +254,14 @@ const handleChangeEpisode = (id,showId, season = 1) => {
 
                     const episodeElement = document.createElement('div');
                     episodeElement.classList.add('series');
+                    // look for selected
+                    if (episode.episode_number == selectedEpisode) {
+                        episodeElement.classList.add('selected-episode');
+                    }
+
                     episodeElement.innerHTML =
                         `
-                            <a onclick='handleChangeEpisode(${episode.episode_number},${tvShowId},${season})'  class="series__cover">
+                            <a onclick='handleChangeEpisode(${episode.episode_number},${tvShowId},${season})' id='episode' class="series__cover">
                                 <img src="${episode.still_path ? 'https://image.tmdb.org/t/p/w500' + episode.still_path : 'default.jpg'}" alt="${episode.name}">
                                 <span>
                                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -282,7 +290,7 @@ const handleChangeEpisode = (id,showId, season = 1) => {
 
     function handlePopState(event) {
         const urlParams = new URLSearchParams(window.location.search);
-        const season = urlParams.get('season');
+        const season = urlParams.get('season') || 1;
         const episode = urlParams.get('episode') || 1;
 
         if (season) {
@@ -293,6 +301,7 @@ const handleChangeEpisode = (id,showId, season = 1) => {
 
     // Initialize
     window.addEventListener('popstate', handlePopState);
+    document.addEventListener("DOMContentLoaded", handleChangeEpisode(1, tvShowId, 1));
     handlePopState();
 </script>
 

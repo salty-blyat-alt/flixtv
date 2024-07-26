@@ -19,6 +19,7 @@ use App\Http\Controllers\MovieController;
 Route::get('/', [MovieController::class, 'populateHomePageMovie']);
 Route::get('/catalog', [MovieController::class, 'populateCatalogPage']);
 Route::get('/category', [MovieController::class, 'populateCategoryPage']);
+Route::get('/search={searchTerm}', [MovieController::class, 'search']);
 
 Route::view('/pricing', 'pages.pricing');
 Route::view('/live', 'pages.live');

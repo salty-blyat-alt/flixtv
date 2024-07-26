@@ -171,4 +171,37 @@ class TMDBService
         }
     }
 
+
+    public function searchMovies($query, $page = 1) {
+        if (empty($query)) {
+            throw new \InvalidArgumentException('Search query cannot be empty');
+        }
+
+        $url = $this->baseUrl . "/search/movie?api_key=" . $this->apiKey . "&language=en-US&query=" . urlencode($query) . "&page=" . $page;
+
+        $response = Http::withOptions(['verify' => false])->get($url);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('Unable to search for movies from TMDB service: ' . $response->body());
+    }
+    public function searchTVShows($query, $page = 1) {
+        if (empty($query)) {
+            throw new \InvalidArgumentException('Search query cannot be empty');
+        }
+
+        $url = $this->baseUrl . "/search/tv?api_key=" . $this->apiKey . "&language=en-US&query=" . urlencode($query) . "&page=" . $page;
+
+        $response = Http::withOptions(['verify' => false])->get($url);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('Unable to search for TV shows from TMDB service: ' . $response->body());
+    }
+
+
 }
