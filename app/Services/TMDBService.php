@@ -8,12 +8,11 @@ class TMDBService
 {
     protected $apiKey;
     protected $baseUrl;
-
     public function __construct() {
-        $this->apiKey = env("TMDB_API_KEY");
+        $this->apiKey = env('TMDB_API_KEY');
         $this->baseUrl = 'https://api.themoviedb.org/3';
     }
-// Movie api section
+    // Movie api section
     public function getTopRated() {
         $url = $this->baseUrl . "/movie/top_rated?api_key=" . $this->apiKey . "&language=en-US&page=1";
         $response = Http::withOptions(['verify' => false])->get($url);
@@ -116,8 +115,10 @@ class TMDBService
         throw new \Exception('Unable to fetch top-rated movies from TMDB service: ' . $response->body());
     }
 
-// TV show section
-public function getTVshows($page = 1){
+
+
+    // TV show section
+    public function getTVshows($page = 1){
     $url = $this->baseUrl . "/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=$page&sort_by=popularity.desc&api_key=$this->apiKey";
 
     $response = Http::withOptions(['verify' => false])->get($url);
@@ -128,6 +129,46 @@ public function getTVshows($page = 1){
     throw new \Exception('Unable to fetch popular movies from TMDB service: ' . $response->body());
 
 
-}
+    }
+
+
+    public function getTvShowDetail($id){
+    if (!$id || $id < 0) {
+        throw new \InvalidArgumentException('Invalid TV show ID provided');
+    }
+
+        $url = $this->baseUrl. "/tv/" . $id . "?api_key=" . $this->apiKey;
+        try {
+            // Make the HTTP GET request with SSL verification disabled
+            $response = Http::withOptions(['verify' => false])->get($url);
+
+            if ($response->successful()) {
+                return $response->json(); // Return decoded JSON response
+            }
+
+            throw new \Exception('Unable to fetch data from TMDB service: ' . $response->status());
+        } catch (\Exception $e) {
+            Log::error('Error fetching TV show details: ' . $e->getMessage());
+            throw $e; // Re-throw exception for the caller to handle
+        }
+    }
+
+    public function getEpisodeBySeason(int $id, int $season): array {
+        $url = $this->baseUrl . "/tv/" . $id . "/season/" . $season . "?api_key=" . $this->apiKey;
+
+        try {
+            // Make the HTTP GET request with SSL verification disabled
+            $response = Http::withOptions(['verify' => false])->get($url);
+
+            if ($response->successful()) {
+                return $response->json(); // Return decoded JSON response
+            }
+
+            throw new \Exception('Unable to fetch getEpisodeBySeason from TMDB service: ' . $response->status());
+        } catch (\Exception $e) {
+            Log::error('Error fetching TV show details (ID: ' . $id . ', Season: ' . $season . '): ' . $e->getMessage());
+            throw new \Exception('Error fetching TV show details. Please try again later.');
+        }
+    }
 
 }
