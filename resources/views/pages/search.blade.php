@@ -37,7 +37,7 @@
     <!-- Movies Section -->
     <h2>Movies</h2>
     <div class="container px-4 mx-auto">
-        <div class="flex flex-wrap gap-2 mx-auto">
+        <div class="flex flex-wrap gap-2 mx-auto" id="searchSection">
             @if (isset($result['movies']) && count($result['movies']) > 0)
                 @foreach ($result['movies'] as $movie)
                     @php
@@ -52,8 +52,7 @@
                 <p>No movies found.</p>
             @endif
 
-            <!-- TV Shows Section -->
-            <h2>TV Shows</h2>
+
             @if (isset($result['tv_shows']) && count($result['tv_shows']) > 0)
                 @foreach ($result['tv_shows'] as $tvShow)
                     @php

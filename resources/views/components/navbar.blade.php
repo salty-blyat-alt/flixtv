@@ -1,4 +1,4 @@
-<nav class="bg-gray-800 p-4 text-white absolute top-0 left-0 right-0 z-10">
+<nav class="bg-gray-800 p-4 text-white fixed  top-0 left-0 right-0 z-10">
     <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         <div class="flex items-center gap-x-4 w-full lg:w-auto justify-between lg:justify-start">
             <div class="flex items-center gap-x-2">

@@ -139,23 +139,6 @@
                                     <div class="section__series grid grid-cols-4 gap-4" id="episodesContainer">
                                     </div>
                                 </div>
-
-                                {{-- <button class="section__nav section__nav--series section__nav--prev" data-nav="#series"
-                                    type="button"><svg width="17" height="15" viewBox="0 0 17 15" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1.25 7.72559L16.25 7.72559" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path d="M7.2998 1.70124L1.2498 7.72524L7.2998 13.7502" stroke-width="1.5"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg></button>
-                                <button class="section__nav section__nav--series section__nav--next" data-nav="#series" --}}
-                                    type="button"><svg width="17" height="15" viewBox="0 0 17 15"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M15.75 7.72559L0.75 7.72559" stroke-width="1.5"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M9.7002 1.70124L15.7502 7.72524L9.7002 13.7502" stroke-width="1.5"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg></button>
                             </div>
                         </div>
                 </div>
@@ -247,9 +230,10 @@
                 'X-Requested-With': 'XMLHttpRequest'
             },
             success: function(data) {
+                console.log("data", data)
                 const episodesContainer = document.getElementById('episodesContainer');
                 episodesContainer.innerHTML = '';
-                console.log(data.episodes['episodes'])
+
                 data.episodes['episodes'].forEach(episode => {
 
                     const episodeElement = document.createElement('div');
@@ -258,7 +242,6 @@
                     if (episode.episode_number == selectedEpisode) {
                         episodeElement.classList.add('selected-episode');
                     }
-
                     episodeElement.innerHTML =
                         `
                             <a onclick='handleChangeEpisode(${episode.episode_number},${tvShowId},${season})' id='episode' class="series__cover">
