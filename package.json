@@ -1,12 +1,13 @@
 {
     "private": true,
-    "scripts": { 
+    "scripts": {
         "development": "mix",
         "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "dev": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "vercel-build": "composer install && php artisan config:cache"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.19",
