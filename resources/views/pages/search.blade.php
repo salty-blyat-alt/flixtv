@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    {{-- tailwind cdn --}}
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,49 +30,58 @@
 <body>
     <!-- header (hidden style) -->
     <x-navbar />
-    <!-- end header -->
-    <h1>Search Results</h1>
-
-    <!-- Movies Section -->
-    <h2>Movies</h2>
     <div class="container px-4 mx-auto">
-        <div class="flex flex-wrap gap-2 mx-auto" id="searchSection">
-            @if (isset($result['movies']) && count($result['movies']) > 0)
-                @foreach ($result['movies'] as $movie)
-                    @php
-                        $imageUrl = $movie['poster_path']
-                            ? 'https://image.tmdb.org/t/p/original' . $movie['poster_path']
-                            : asset('img/home/2.jpg');
-                    @endphp
+        <h1 class="text-2xl text-white pt-32">Search Results for "{{ $searchterm }}" </h1>
+        <div class="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4" id="searchSection">
+            @foreach ($combinedResults as $movie)
+                @php
+                    $genres = [
+                        28 => 'Action',
+                        12 => 'Adventure',
+                        16 => 'Animation',
+                        35 => 'Comedy',
+                        80 => 'Crime',
+                        99 => 'Documentary',
+                        18 => 'Drama',
+                        10751 => 'Family',
+                        14 => 'Fantasy',
+                        36 => 'History',
+                        27 => 'Horror',
+                        10402 => 'Music',
+                        9648 => 'Mystery',
+                        10749 => 'Romance',
+                        878 => 'Science Fiction',
+                        10770 => 'TV Movie',
+                        53 => 'Thriller',
+                        10752 => 'War',
+                        37 => 'Western',
+                    ];
 
-                    <x-card-home :link="'movie/detail/' . $movie['id']" :image="$imageUrl" :title="$movie['title']" />
-                @endforeach
-            @else
-                <p>No movies found.</p>
+                    $movieGenres = [];
+                    foreach ($movie['genre_ids'] as $genreId) {
+                        if (isset($genres[$genreId])) {
+                            $movieGenres[] = $genres[$genreId];
+                        }
+                    }
+
+                    $title = $movie['title'] ?? ($movie['name'] ?? 'Title not available');
+                    $releaseDate = $movie['release_date'] ?? ($movie['first_air_date'] ?? null);
+                    $year = $releaseDate ? date('Y', strtotime($releaseDate)) : '';
+                    $url = $movie['isTvShow'] ? 'tv/detail/' . $movie['id'] : 'movie/detail/' . $movie['id'];
+                @endphp
+                <x-carousel-card
+                    imgSrc="{{ $movie['poster_path'] ? 'https://image.tmdb.org/t/p/w500' . $movie['poster_path'] : 'default-image-path.jpg' }}"
+                    detailsUrl="{{ $url }}" title="{{ $title }}"
+                    rating="{{ $movie['vote_average'] ?? 'N/A' }}" category="{{ implode(', ', $movieGenres) }}"
+                    year="{{ $year }}" />
+            @endforeach
+
+            @if (empty($combinedResults))
+                <p>No results found.</p>
             @endif
 
-
-            @if (isset($result['tv_shows']) && count($result['tv_shows']) > 0)
-                @foreach ($result['tv_shows'] as $tvShow)
-                    @php
-                        $imageUrl = $tvShow['poster_path']
-                            ? 'https://image.tmdb.org/t/p/original' . $tvShow['poster_path']
-                            : asset('img/home/2.jpg');
-                    @endphp
-                    <x-card-home :link="'tv/detail/' . $tvShow['id']" :image="$imageUrl" :title="$tvShow['name']" />
-                @endforeach
-            @else
-                <p>No TV shows found.</p>
-            @endif
         </div>
     </div>
-
-
-
-
-
-
-
 
 
 

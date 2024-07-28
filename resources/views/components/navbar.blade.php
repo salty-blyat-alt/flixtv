@@ -2,7 +2,7 @@
     <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         <div class="flex items-center gap-x-4 w-full lg:w-auto justify-between lg:justify-start">
             <div class="flex items-center gap-x-2">
-                <button id="menuToggle" class="text-white lg:hidden">
+                <button id="menuToggle" class="text-white ">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -20,7 +20,7 @@
             </button>
         </div>
         <div class="hidden lg:flex items-center space-x-4 flex-grow justify-center">
-            <span class="font-semibold">Browse</span>
+            <!-- <span class="font-semibold">Browse</span> -->
             <form id="searchForm" action="/" method="get">
                 <input type="text" id="searchInput" name="searchTerm" placeholder="Enter keywords..."
                     class="px-4 py-2 rounded bg-gray-700 text-white w-96">
@@ -49,9 +49,10 @@
             </svg>
         </button>
         <ul class="mt-8 space-y-4">
-            <li><a href="#" class="block hover:text-gray-300">Home</a></li>
-            <li><a href="#" class="block hover:text-gray-300">Catalog</a></li>
-            <li><a href="#" class="block hover:text-gray-300">About us</a></li>
+            <li><a href="/" class="block hover:text-gray-300">Home</a></li>
+            <li><a href="/catalog" class="block hover:text-gray-300">Catalog</a></li>
+            <li><a href="/about" class="block hover:text-gray-300">About us</a></li>
+            <li><a href="/category" class="block hover:text-gray-300">Category</a></li>
         </ul>
     </div>
 </div>

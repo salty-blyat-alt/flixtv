@@ -2470,7 +2470,7 @@ body::-webkit-scrollbar-thumb {
 }
 .selected-episode .series__cover:before {
     opacity: 0.9;
-  } 
+  }
   .selected-episode .series__cover svg {
     stroke: #2f80ed;
   }

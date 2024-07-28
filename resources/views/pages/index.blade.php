@@ -44,7 +44,7 @@
 
     <!-- home -->
     <div class="home">
-        <div class="home__carousel owl-carousel " id="flixtv-hero">
+        <div class="home__carousel owl-carousel" id="flixtv-hero">
             @foreach ($popularMovies['results'] as $popularMovies)
                 <x-card-home :link="'movie/detail/' . $popularMovies['id']" :image="$popularMovies['poster_path']
                     ? 'https://image.tmdb.org/t/p/original' . $popularMovies['poster_path']

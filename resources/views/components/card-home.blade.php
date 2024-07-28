@@ -1,4 +1,4 @@
-<div class="home__card " style="width: 16rem">
+<div class="home__card" style="width: 16rem">
     <a href="{{ $link }}">
         <img src="{{ $image }}" alt={{$title}}>
     </a>

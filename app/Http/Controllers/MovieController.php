@@ -28,15 +28,25 @@ class MovieController extends Controller
 
             // Search for TV shows
             $tvShowsResult = $this->tmdbService->searchTVShows($searchTerm);
+            foreach ($moviesResult['results'] as &$movie) {
+                $movie['isTvShow'] = false; // This is a movie
+            }
 
+            foreach ($tvShowsResult['results'] as &$tvShow) {
+                $tvShow['isTvShow'] = true; // This is a TV show
+            }
             // Combine the results
-            $combinedResults = [
-                'movies' => $moviesResult['results'] ?? [],
-                'tv_shows' => $tvShowsResult['results'] ?? [],
-            ];
+            $combinedResults = array_merge($moviesResult['results'] ?? [], $tvShowsResult['results'] ?? []);
+            // get the popular sort
+            usort($combinedResults, function ($a, $b) {
+                return $b['popularity'] <=> $a['popularity'];
+            });
 
             // Return the search view with combined results
-            return view('pages.search', ['result' => $combinedResults]);
+            return view('pages.search', [
+                'combinedResults' => $combinedResults,
+                'searchterm' => $searchTerm,
+            ]);
         } catch (\Exception $e) {
             // Log the error and return an error response
             Log::error('Search error: ' . $e->getMessage());
