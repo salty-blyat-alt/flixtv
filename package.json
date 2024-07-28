@@ -9,6 +9,11 @@
         "production": "mix --production",
         "vercel-build": "composer install --no-dev && php artisan config:cache && npm install --production"
     },
+    "dependencies": {
+        "laravel-mix": "^6.0.0",
+        "axios": "^0.21",
+        "vue": "^2.6.12"
+      },
     "devDependencies": {
         "autoprefixer": "^10.4.19",
         "axios": "^0.21",
