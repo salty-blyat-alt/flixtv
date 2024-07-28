@@ -7,7 +7,7 @@
         "dev": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "vercel-build": "composer install && php artisan config:cache"
+        "vercel-build": "composer install --no-dev && php artisan config:cache && npm install --production"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.19",
