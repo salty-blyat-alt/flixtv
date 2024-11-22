@@ -108,12 +108,12 @@
 
                         </div>
 
-                        <div class="slider-radio">
+                        <!-- <div class="slider-radio">
                             <input type="radio" name="grade" id="featured" checked="checked"><label
                                 for="featured">Featured</label>
                             <input type="radio" name="grade" id="popular"><label for="popular">Popular</label>
                             <input type="radio" name="grade" id="newest"><label for="newest">Newest</label>
-                        </div>
+                        </div> -->
                     </div>
 
                     @php
